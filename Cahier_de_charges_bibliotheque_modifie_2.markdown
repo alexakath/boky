@@ -12,25 +12,23 @@ Date actuelle
 
 Scénario nominal:
 Le bibliothécaire se connecte au système.
-Il accède au menu "Prêter un livre".
-Il entre la référence de l'adhérant, la référence de l'exemplaire et le type de prêt.
+Il accède au menu "Gestion des Prêts".
+Il entre la référence de l'adhérant, la référence du livre (id_livre dans a table exemplaire) et le type de prêt.
 Verification de la validité de l'abonnement, du nbr de quota, l'absence de penalité 
 Il clique sur le bouton "Prêter".
-
 
 Règles de gestion:
 L'adhérant doit exister dans la base de données.
 Verification de l'age (si livre avec restriction d'age)
-L'exemplaire doit être disponible (non emprunté ou réservé).
+L'exemplaire du livre doit être disponible (non emprunté ou réservé).
 Le quota d'emprunts de l'adhérant (défini par le bibliothécaire pour le type : étudiant, professionnel, professeur) ne doit pas être dépassé.
 L'adhérant ne doit pas avoir de sanction active (pénalité en cours).
 L'abonnement de l'adhérant doit être valide (date actuelle entre date de début et date de fin).
 Le livre doit être adapté à l'âge de l'adhérant (ex. : certains livres sont réservés aux adhérants de 18 ans ou plus).
-
+si le type de prêt est "lecture sur place" la date de retour est egal à la date d'emprunt sinon une date est donné pour la date de retour.
 
 Scénario alternatif:
 Si une règle de gestion n'est pas respectée, afficher une page d'erreur avec un message expliquant la raison (ex. : "Adhérant non abonné", "Exemplaire non disponible" ou "Livre non adapté à l'âge").
-
 
 Résultat:
 L'exemplaire devient indisponible.
