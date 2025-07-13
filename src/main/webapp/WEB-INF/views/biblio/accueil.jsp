@@ -123,7 +123,7 @@
 
             <div class="menu-item">
                 <h3>Gestion des Prêts</h3>
-                <p>Enregistrer et suivre les prêts</p>
+                <p><a href="/prets/preter">Prêter un livre</a></p>
             </div>
             
             <div class="menu-item">
