@@ -17,6 +17,7 @@ public class PretController {
     public String showPreterLivre(Model model) {
         model.addAttribute("adherants", pretService.findAllAdherants());
         model.addAttribute("exemplaires", pretService.findAllExemplairesDisponibles());
+        model.addAttribute("pretsActifs", pretService.findPretsActifs());
         return "biblio/preterLivre";
     }
 
@@ -33,12 +34,14 @@ public class PretController {
             model.addAttribute("error", error);
             model.addAttribute("adherants", pretService.findAllAdherants());
             model.addAttribute("exemplaires", pretService.findAllExemplairesDisponibles());
+            model.addAttribute("pretsActifs", pretService.findPretsActifs());
             return "biblio/preterLivre";
         }
 
         model.addAttribute("success", "Le livre a été prêté avec succès!");
         model.addAttribute("adherants", pretService.findAllAdherants());
         model.addAttribute("exemplaires", pretService.findAllExemplairesDisponibles());
+        model.addAttribute("pretsActifs", pretService.findPretsActifs());
         return "biblio/preterLivre";
     }
 }

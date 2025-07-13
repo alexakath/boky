@@ -6,6 +6,7 @@ com\example\biblio\repository\PenaliteRepository.class
 com\example\biblio\repository\PretRepository.class
 com\example\biblio\BiblioApplication.class
 com\example\biblio\controller\AbonnementController.class
+com\example\biblio\service\PretService.class
 com\example\biblio\repository\AbonnementRepository.class
 com\example\biblio\controller\ConnexionController.class
 com\example\biblio\model\Exemplaire$StatutExemplaire.class
@@ -22,6 +23,7 @@ com\example\biblio\service\AdherantService.class
 com\example\biblio\model\Penalite.class
 com\example\biblio\model\Penalite$TypePenalite.class
 com\example\biblio\model\Reservation.class
+com\example\biblio\controller\PretController.class
 com\example\biblio\model\JourFerier.class
 com\example\biblio\model\Exemplaire.class
 com\example\biblio\repository\LivreRepository.class

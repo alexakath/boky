@@ -61,7 +61,7 @@ CREATE TABLE Pret (
     date_pret DATE NOT NULL,
     date_retour_prevue DATE NOT NULL,
     date_retour_reelle DATE,
-    type_pret ENUM('lecture_sur_place', 'a_emporter') NOT NULL,
+    type_pret ENUM('LECTURE_SUR_PLACE', 'A_EMPORTER') NOT NULL,
     nombre_prolongements INT DEFAULT 0,
     CHECK (date_retour_prevue >= date_pret),
     FOREIGN KEY (id_exemplaire) REFERENCES Exemplaire(id_exemplaire) ON DELETE CASCADE,

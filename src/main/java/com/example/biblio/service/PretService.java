@@ -35,6 +35,10 @@ public class PretService {
                 .collect(java.util.stream.Collectors.toList());
     }
 
+    public List<Pret> findPretsActifs() {
+        return pretRepository.findPretsActifs();
+    }
+
     public String preterLivre(Integer adherantId, Integer exemplaireId, String typePret) {
         // Validation des paramètres
         if (adherantId == null || exemplaireId == null || typePret == null) {

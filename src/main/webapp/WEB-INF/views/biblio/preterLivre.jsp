@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,9 +22,25 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+        }
+        
+        .content-wrapper {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-section {
+            flex: 1;
+            min-width: 500px;
+        }
+        
+        .list-section {
+            flex: 1;
+            min-width: 500px;
         }
         
         h1 {
@@ -31,12 +48,17 @@
             font-size: 28px;
         }
         
-        .form-container {
+        h2 {
+            margin-top: 0;
+            color: #333;
+            font-size: 22px;
+        }
+        
+        .form-container, .list-container {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
         }
         
         .form-group {
@@ -149,6 +171,84 @@
             margin: 5px 0;
             color: #555;
         }
+        
+        /* Styles pour la table des prêts */
+        .prets-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .prets-table th, .prets-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .prets-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .prets-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .prets-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .type-pret {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .type-emporter {
+            background-color: #2196F3;
+        }
+        
+        .type-sur-place {
+            background-color: #4CAF50;
+        }
+        
+        .date-retour {
+            font-weight: bold;
+        }
+        
+        .retard {
+            color: #d32f2f;
+        }
+        
+        .normal {
+            color: #333;
+        }
+        
+        .no-prets {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+        
+        .prets-count {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .form-section, .list-section {
+                min-width: auto;
+            }
+        }
     </style>
     <script>
         function afficherInfoExemplaire() {
@@ -207,63 +307,127 @@
             <div class="success">${success}</div>
         </c:if>
         
-        <div class="form-container">
-            <form method="post" action="/prets/preter">
-                <div class="form-group">
-                    <label for="adherantId">Sélectionner un adhérant *</label>
-                    <select id="adherantId" name="adherantId" required onchange="afficherInfoAdherant()">
-                        <option value="">-- Choisir un adhérant --</option>
-                        <c:forEach var="adherant" items="${adherants}">
-                            <option value="${adherant.id}" 
-                                    data-nom="${adherant.nom}" 
-                                    data-prenom="${adherant.prenom}"
-                                    data-quota="${adherant.quotaRestantEmprunt}">
-                                ${adherant.nom} ${adherant.prenom} (${adherant.email})
-                            </option>
-                        </c:forEach>
-                    </select>
-                    <div id="adherantInfo" class="exemplaire-info" style="display: none;"></div>
+        <div class="content-wrapper">
+            <!-- Section formulaire -->
+            <div class="form-section">
+                <div class="form-container">
+                    <h2>Nouveau prêt</h2>
+                    <form method="post" action="/prets/preter">
+                        <div class="form-group">
+                            <label for="adherantId">Sélectionner un adhérant *</label>
+                            <select id="adherantId" name="adherantId" required onchange="afficherInfoAdherant()">
+                                <option value="">-- Choisir un adhérant --</option>
+                                <c:forEach var="adherant" items="${adherants}">
+                                    <option value="${adherant.id}" 
+                                            data-nom="${adherant.nom}" 
+                                            data-prenom="${adherant.prenom}"
+                                            data-quota="${adherant.quotaRestantEmprunt}">
+                                        ${adherant.nom} ${adherant.prenom} (${adherant.email})
+                                    </option>
+                                </c:forEach>
+                            </select>
+                            <div id="adherantInfo" class="exemplaire-info" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exemplaireId">Sélectionner un exemplaire *</label>
+                            <select id="exemplaireId" name="exemplaireId" required onchange="afficherInfoExemplaire()">
+                                <option value="">-- Choisir un exemplaire --</option>
+                                <c:forEach var="exemplaire" items="${exemplaires}">
+                                    <option value="${exemplaire.id}" 
+                                            data-titre="${exemplaire.livre.titre}" 
+                                            data-auteur="${exemplaire.livre.auteur}"
+                                            data-age-min="${exemplaire.livre.ageMinimum}">
+                                        ${exemplaire.livre.titre} - ${exemplaire.livre.auteur} (Exemplaire #${exemplaire.id})
+                                    </option>
+                                </c:forEach>
+                            </select>
+                            <div id="exemplaireInfo" class="exemplaire-info" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Type de prêt *</label>
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="typePret" value="LECTURE_SUR_PLACE" required>
+                                    Lecture sur place
+                                </label>
+                                <label>
+                                    <input type="radio" name="typePret" value="A_EMPORTER" required>
+                                    À emporter
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn">Prêter le livre</button>
+                            <a href="/biblio/accueil" class="btn btn-secondary">Annuler</a>
+                        </div>
+                    </form>
                 </div>
-                
-                <div class="form-group">
-                    <label for="exemplaireId">Sélectionner un exemplaire *</label>
-                    <select id="exemplaireId" name="exemplaireId" required onchange="afficherInfoExemplaire()">
-                        <option value="">-- Choisir un exemplaire --</option>
-                        <c:forEach var="exemplaire" items="${exemplaires}">
-                            <option value="${exemplaire.id}" 
-                                    data-titre="${exemplaire.livre.titre}" 
-                                    data-auteur="${exemplaire.livre.auteur}"
-                                    data-age-min="${exemplaire.livre.ageMinimum}">
-                                ${exemplaire.livre.titre} - ${exemplaire.livre.auteur} (Exemplaire #${exemplaire.id})
-                            </option>
-                        </c:forEach>
-                    </select>
-                    <div id="exemplaireInfo" class="exemplaire-info" style="display: none;"></div>
+            </div>
+            
+            <!-- Section liste des prêts -->
+            <div class="list-section">
+                <div class="list-container">
+                    <h2>Prêts en cours</h2>
+                    
+                    <c:choose>
+                        <c:when test="${not empty pretsActifs}">
+                            <div class="prets-count">
+                                ${pretsActifs.size()} prêt(s) en cours
+                            </div>
+                            
+                            <table class="prets-table">
+                                <thead>
+                                    <tr>
+                                        <th>Livre</th>
+                                        <th>Adhérant</th>
+                                        <th>Date prêt</th>
+                                        <th>Date retour</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="pret" items="${pretsActifs}">
+                                        <tr>
+                                            <td>
+                                                <strong>${pret.exemplaire.livre.titre}</strong><br>
+                                                <small>${pret.exemplaire.livre.auteur}</small>
+                                            </td>
+                                            <td>
+                                                ${pret.adherant.nom} ${pret.adherant.prenom}
+                                            </td>
+                                            <td>
+                                                <fmt:formatDate value="${pret.datePret}" pattern="dd/MM/yyyy"/>
+                                            </td>
+                                            <td>
+                                                <span class="date-retour ${pret.dateRetourPrevue.isBefore(java.time.LocalDate.now()) ? 'retard' : 'normal'}">
+                                                    <fmt:formatDate value="${pret.dateRetourPrevue}" pattern="dd/MM/yyyy"/>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="type-pret ${pret.typePret == 'A_EMPORTER' ? 'type-emporter' : 'type-sur-place'}">
+                                                    ${pret.typePret == 'A_EMPORTER' ? 'À emporter' : 'Sur place'}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="no-prets">
+                                Aucun prêt en cours
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-                
-                <div class="form-group">
-                    <label>Type de prêt *</label>
-                    <div class="radio-group">
-                        <label>
-                            <input type="radio" name="typePret" value="lecture_sur_place" required>
-                            Lecture sur place
-                        </label>
-                        <label>
-                            <input type="radio" name="typePret" value="a_emporter" required>
-                            À emporter
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <button type="submit" class="btn">Prêter le livre</button>
-                    <a href="/biblio/accueil" class="btn btn-secondary">Annuler</a>
-                </div>
-            </form>
+            </div>
         </div>
         
         <div class="back-link">
-            <a href="/biblio/accueil">← Retour à l'accueil</a>
+            <a href="/accueil">← Retour à l'accueil</a>
         </div>
     </div>
 </body>
