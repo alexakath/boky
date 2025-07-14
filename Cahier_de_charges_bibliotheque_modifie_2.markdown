@@ -16,6 +16,7 @@ Il accède au menu "Gestion des Prêts".
 Il entre la référence de l'adhérant, la référence du livre (id_livre dans a table exemplaire) et le type de prêt.
 Verification de la validité de l'abonnement, du nbr de quota, l'absence de penalité 
 Il clique sur le bouton "Prêter".
+Une liste de tous les livre prêter sont afficher.
 
 Règles de gestion:
 L'adhérant doit exister dans la base de données.

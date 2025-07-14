@@ -33,10 +33,11 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Reservation(Exemplaire exemplaire, Adherant adherant, LocalDate dateReservation) {
+    public Reservation(Exemplaire exemplaire, Adherant adherant, LocalDate dateReservation, StatutReservation statut) {
         this.exemplaire = exemplaire;
         this.adherant = adherant;
         this.dateReservation = dateReservation;
+        this.statut = statut;
     }
 
     public Integer getId() {
