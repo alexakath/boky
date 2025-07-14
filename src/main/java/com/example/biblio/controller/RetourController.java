@@ -30,20 +30,19 @@ public class RetourController {
             @RequestParam("idAdherant") Integer idAdherant,
             @RequestParam("idExemplaire") Integer idExemplaire,
             @RequestParam("dateRetourReelle") String dateRetourReelle,
-            @RequestParam(value = "joursePenalite", required = false) Integer joursPenalite,
             Model model) {
 
         try {
             LocalDate dateRetour = LocalDate.parse(dateRetourReelle);
             
-            String error = retourService.rendreLivre(idAdherant, idExemplaire, dateRetour, joursPenalite);
+            // Le nombre de jours de pénalité est maintenant fixe selon le type d'adhérant
+            String error = retourService.rendreLivre(idAdherant, idExemplaire, dateRetour, null);
 
             if (error != null) {
                 model.addAttribute("error", error);
                 model.addAttribute("idAdherant", idAdherant);
                 model.addAttribute("idExemplaire", idExemplaire);
                 model.addAttribute("dateRetourReelle", dateRetourReelle);
-                model.addAttribute("joursPenalite", joursPenalite);
             } else {
                 model.addAttribute("success", "Livre rendu avec succès.");
             }
@@ -52,7 +51,6 @@ public class RetourController {
             model.addAttribute("idAdherant", idAdherant);
             model.addAttribute("idExemplaire", idExemplaire);
             model.addAttribute("dateRetourReelle", dateRetourReelle);
-            model.addAttribute("joursPenalite", joursPenalite);
         }
 
         List<Pret> pretsActifs = retourService.findAllPretsActifs();

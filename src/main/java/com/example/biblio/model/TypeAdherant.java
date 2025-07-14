@@ -25,16 +25,20 @@ public class TypeAdherant {
     @Column(name = "quota_prolongements", nullable = false)
     private int quotaProlongements;
 
+    @Column(name = "jours_penalite", nullable = false)
+    private int joursPenalite;
+
     @OneToMany(mappedBy = "typeAdherant")
     private Set<Adherant> adherants = new HashSet<>();
 
     public TypeAdherant() {}
 
-    public TypeAdherant(String nomType, int quotaEmprunts, int quotaReservations, int quotaProlongements) {
+    public TypeAdherant(String nomType, int quotaEmprunts, int quotaReservations, int quotaProlongements, int joursPenalite) {
         this.nomType = nomType;
         this.quotaEmprunts = quotaEmprunts;
         this.quotaReservations = quotaReservations;
         this.quotaProlongements = quotaProlongements;
+        this.joursPenalite = joursPenalite;
     }
 
     public Integer getId() {
@@ -75,6 +79,14 @@ public class TypeAdherant {
 
     public void setQuotaProlongements(int quotaProlongements) {
         this.quotaProlongements = quotaProlongements;
+    }
+
+    public int getJoursPenalite() {
+        return joursPenalite;
+    }
+
+    public void setJoursPenalite(int joursPenalite) {
+        this.joursPenalite = joursPenalite;
     }
 
     public Set<Adherant> getAdherants() {

@@ -40,6 +40,11 @@ public class RetourService {
             return "Tous les champs sont obligatoires.";
         }
 
+        // Vérifier si la date de retour est un jour férié
+        if (jourFerierService.isJourFerier(dateRetourReelle)) {
+            return "Cette date est un jour férié. Veuillez choisir une date postérieure au jour férié.";
+        }
+
         // Vérification de l'existence de l'adhérant
         Optional<Adherant> adherantOpt = adherantRepository.findById(idAdherant);
         if (!adherantOpt.isPresent()) {
@@ -80,25 +85,23 @@ public class RetourService {
         
         // Gestion des pénalités
         if (enRetard) {
-            // Vérifier si la date de retour tombe un jour férié
-            boolean estJourFerier = jourFerierService.isJourFerier(dateRetourReelle);
+            // Utiliser le nombre de jours de pénalité fixe du type d'adhérant
+            int joursPenaliteFixe = adherant.getTypeAdherant().getJoursPenalite();
             
-            if (!estJourFerier && joursPenalite != null && joursPenalite > 0) {
-                // Créer une pénalité
-                LocalDate dateDebutPenalite = dateRetourReelle;
-                LocalDate dateFinPenalite = dateRetourReelle.plusDays(joursPenalite);
-                
-                Penalite penalite = new Penalite(
-                    adherant, 
-                    pretActif, 
-                    Penalite.TypePenalite.RETARD, 
-                    dateDebutPenalite, 
-                    joursPenalite, 
-                    dateFinPenalite
-                );
-                
-                penaliteRepository.save(penalite);
-            }
+            // Créer une pénalité
+            LocalDate dateDebutPenalite = dateRetourReelle;
+            LocalDate dateFinPenalite = dateRetourReelle.plusDays(joursPenaliteFixe);
+            
+            Penalite penalite = new Penalite(
+                adherant, 
+                pretActif, 
+                Penalite.TypePenalite.RETARD, 
+                dateDebutPenalite, 
+                joursPenaliteFixe, 
+                dateFinPenalite
+            );
+            
+            penaliteRepository.save(penalite);
         }
 
         // Marquer le prêt comme terminé

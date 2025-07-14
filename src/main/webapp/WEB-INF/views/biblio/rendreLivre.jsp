@@ -139,6 +139,24 @@
         .back-link a:hover {
             color: #333;
         }
+        
+        .info-box {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        
+        .info-box p {
+            margin: 5px 0;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -160,6 +178,14 @@
             </div>
         </c:if>
         
+        <!-- Informations sur les pénalités -->
+        <div class="info-box">
+            <h3>Informations importantes</h3>
+            <p>• Les pénalités sont calculées automatiquement selon le type d'adhérant</p>
+            <p>• Il est interdit de rendre un livre un jour férié</p>
+            <p>• Si la date de retour tombe un jour férié, veuillez choisir une date postérieure</p>
+        </div>
+        
         <!-- Formulaire de retour -->
         <div class="form-section">
             <h2>Enregistrer un retour de livre</h2>
@@ -178,18 +204,13 @@
                 <div class="form-group">
                     <label for="dateRetourReelle">Date de retour réelle :</label>
                     <input type="date" id="dateRetourReelle" name="dateRetourReelle" value="${dateRetourReelle}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="joursPenalite">Nombre de jours de pénalité (si applicable) :</label>
-                    <input type="number" id="joursPenalite" name="joursPenalite" value="${joursPenalite}" min="0">
                     <small style="color: #666; font-size: 14px;">
-                        Laisser vide si aucune pénalité. Pas de pénalité si la date de retour tombe un jour férié.
+                        Attention : Il est interdit de rendre un livre un jour férié.
                     </small>
                 </div>
                 
                 <button type="submit" class="btn">Rendre le livre</button>
-                <a href="/accueil-bibliothecaire" class="btn btn-secondary">Annuler</a>
+                <a href="/accueil" class="btn btn-secondary">Annuler</a>
             </form>
         </div>
         
@@ -207,6 +228,7 @@
                         <tr>
                             <th>ID Prêt</th>
                             <th>Adhérant</th>
+                            <th>Type adhérant</th>
                             <th>Livre</th>
                             <th>ID Exemplaire</th>
                             <th>Date d'emprunt</th>
@@ -220,6 +242,7 @@
                             <tr>
                                 <td>${pret.id}</td>
                                 <td>${pret.adherant.nom} ${pret.adherant.prenom} (ID: ${pret.adherant.id})</td>
+                                <td>${pret.adherant.typeAdherant.nomType} (${pret.adherant.typeAdherant.joursPenalite} jours de pénalité)</td>
                                 <td>${pret.exemplaire.livre.titre}</td>
                                 <td>${pret.exemplaire.id}</td>
                                 <td>${pret.datePret}</td>
@@ -233,11 +256,10 @@
                                 <td>
                                     <jsp:useBean id="dateObj" class="java.util.Date"/>
                                     <jsp:setProperty name="dateObj" property="time" value="${System.currentTimeMillis()}"/>
-                                    ${dateObj}
-                                    ${pret.dateRetourPrevue}
+                                    <fmt:formatDate value="${dateObj}" pattern="yyyy-MM-dd" var="today"/>
                                     
                                     <c:choose>
-                                        <c:when test="${today > dateRetourPrevue}">
+                                        <c:when test="${today > pret.dateRetourPrevue}">
                                             <span class="retard">En retard</span>
                                         </c:when>
                                         <c:otherwise>

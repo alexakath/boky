@@ -37,7 +37,7 @@ Le quota d'emprunts de l'adhérant est décrémenté de 1.
 Un prêt est enregistré pour l'adhérant avec le type de prêt spécifié.
 
 
-2. Rendre un livre
+2. Rendre un livre (CHECK)
 
 Nom: Rendre_livre
 Objectifs: Permettre à un adhérant de rendre un exemplaire emprunté.
@@ -227,13 +227,11 @@ L'adhérant reste actif pour les emprunts et réservations.
 7. Gérer les pénalités
 
 Nom: Gérer_pénalités
-Objectifs: Enregistrer ou supprimer une pénalité pour un adhérant en cas de retard ou autre infraction.
+Objectifs: Enregistrer ou supprimer une pénalité pour un adhérant en cas de retard.
 Acteur: Bibliothécaire
 Entrée:
 Référence de l'adhérant
 Type de pénalité (retard)
-Date de retour prévue
-Date de retour réelle (pour les pénalités de retard)
 Nombre de jours de pénalité (défini par le bibliothécaire selon le profil)
 
 
