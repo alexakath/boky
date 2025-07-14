@@ -84,7 +84,7 @@ CREATE TABLE Penalite (
     id_penalite INT AUTO_INCREMENT PRIMARY KEY,
     id_adherant INT NOT NULL,
     id_pret INT, -- Lien vers le prêt spécifique (facultatif)
-    type_penalite ENUM('retard') NOT NULL,
+    type_penalite ENUM('RETARD') NOT NULL,
     date_debut_penalite DATE NOT NULL,
     nombre_jours INT NOT NULL,
     date_fin_penalite DATE NOT NULL,

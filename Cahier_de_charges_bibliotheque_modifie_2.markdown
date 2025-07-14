@@ -230,29 +230,19 @@ Nom: Gérer_pénalités
 Objectifs: Enregistrer ou supprimer une pénalité pour un adhérant en cas de retard.
 Acteur: Bibliothécaire
 Entrée:
-Référence de l'adhérant
-Type de pénalité (retard)
-Nombre de jours de pénalité (défini par le bibliothécaire selon le profil)
-
+Pénalités enregistré dans le menu "gestion des retours des livres"
 
 Scénario nominal:
 Le bibliothécaire se connecte au système.
-Il accède au menu "Gérer les pénalités".
-Il entre la référence de l'adhérant et les détails de la pénalité.
-Pour un retard, il spécifie le nombre de jours de pénalité selon le profil.(calcul des pénalités >date de retour reel + nbr de jours de pénalité selon le bibliothécaire)
-Il clique sur le bouton "Appliquer" ou "Supprimer".
-
+Il accède au menu "Gestion des pénalités".
+Une liste de tous les pénalités selon le type d'adhérant est afficher avec les informations necessaires (reference adhérant, type d'adhérant, nombre de jours de pénalités, date de début et date fin de la pénalité)
 
 Règles de gestion:
-L'adhérant doit exister dans la base de données.
-Pour une pénalité de retard, le bibliothécaire définit le nombre de jours de sanction à partir de la date de retour réelle, selon le profil (étudiant, professionnel, professeur).
-Pas de pénalité si la date de retour réelle tombe un jour férié.
-Une pénalité active empêche l'adhérant d'emprunter ou de réserver.
-
+Toutes les pénalités enregistrer dans le menu "gestion des retours des livres" sera afficher sur cette page 
+La pénalité d'un adhérant est supprimer dans cette page quan la date de la fin de pénalité est arrivé
 
 Scénario alternatif:
 Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Adhérant non trouvé" ou "Nombre de jours de pénalité invalide").
-
 
 Résultat:
 Une pénalité est ajoutée ou supprimée pour l'adhérant.
