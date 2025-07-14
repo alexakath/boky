@@ -349,11 +349,11 @@
                             <label>Type de prêt *</label>
                             <div class="radio-group">
                                 <label>
-                                    <input type="radio" name="typePret" value="lecture_sur_place" required>
+                                    <input type="radio" name="typePret" value="LECTURE_SUR_PLACE" required>
                                     Lecture sur place
                                 </label>
                                 <label>
-                                    <input type="radio" name="typePret" value="a_emporter" required>
+                                    <input type="radio" name="typePret" value="A_EMPORTER" required>
                                     À emporter
                                 </label>
                             </div>
@@ -401,8 +401,8 @@
                                             <td>
                                                 <fmt:formatDate value="${pret.datePret}" pattern="dd/MM/yyyy"/>
                                             </td>
-                                            <td>
-                                                <span class="date-retour ${pret.dateRetourPrevue.isBefore(java.time.LocalDate.now()) ? 'retard' : 'normal'}">
+                                             <td>
+                                                <span class="date-retour">
                                                     <fmt:formatDate value="${pret.dateRetourPrevue}" pattern="dd/MM/yyyy"/>
                                                 </span>
                                             </td>
@@ -427,7 +427,7 @@
         </div>
         
         <div class="back-link">
-            <a href="/biblio/accueil">← Retour à l'accueil</a>
+            <a href="/accueil">← Retour à l'accueil</a>
         </div>
     </div>
 </body>
