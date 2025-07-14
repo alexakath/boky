@@ -1,4 +1,11 @@
+-- Insertion des types d'adhérents (DOIT être fait en premier)
+INSERT INTO Typeadherant (nom_type, quota_emprunts, quota_reservations, quota_prolongements, jours_penalite)
+VALUES
+('Étudiant', 3, 2, 2, 3),
+('Professionnel', 5, 3, 2, 5),
+('Professeur', 5, 5, 3, 7);
 
+-- Insertion des adhérents (maintenant les id_type_adherant existent)
 INSERT INTO Adherant (nom, prenom, date_naissance, email, mot_de_passe, id_type_adherant, quota_restant_emprunt, quota_restant_resa, quota_restant_prolog)
 VALUES
 ('Rakoto', 'Jean', '2000-05-12', 'jean.rakoto@example.com', 'password123', 1, 3, 2, 2),
@@ -20,16 +27,14 @@ VALUES
     (2, 'EMPRUNTE'),   -- Exemplaire 4 : 1984
     (3, 'DISPONIBLE'); -- Exemplaire 5 : Harry Potter
 
-    -- Données pour Abonnement
+-- Données pour Abonnement
 INSERT INTO Abonnement (id_adherant, date_debut, date_fin)
 VALUES 
-    (1, '2025-01-01', '2026-01-01'), -- Jean Dupont, abonnement actif
-    (2, '2025-06-01', '2026-06-01'), -- Sophie Martin, abonnement actif
-    (3, '2024-01-01', '2025-01-01'); 
+    (1, '2025-01-01', '2026-01-01'), -- Jean Rakoto, abonnement actif
+    (2, '2025-06-01', '2026-06-01'), -- Marie Rabe, abonnement actif
+    (3, '2024-01-01', '2025-01-01'); -- Lova Ando, abonnement expiré
 
--- Données pour Penalite
+-- Données pour Penalite (exemple avec les bonnes durées)
 INSERT INTO Penalite (id_adherant, id_pret, type_penalite, date_debut_penalite, nombre_jours, date_fin_penalite)
 VALUES 
-    (2, NULL, 'retard', '2025-07-01', 7, '2025-07-08'); -- Sophie Martin, pénalité active
-
-
+    (2, NULL, 'RETARD', '2025-07-01', 5, '2025-07-06'); -- Marie Rabe (Professionnel), 5 jours de pénalité

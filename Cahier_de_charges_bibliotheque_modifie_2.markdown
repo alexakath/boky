@@ -224,7 +224,7 @@ L'adhérant reste actif pour les emprunts et réservations.
 
 
 
-7. Gérer les pénalités
+7. Gérer les pénalités (CHECK)
 
 Nom: Gérer_pénalités
 Objectifs: Enregistrer ou supprimer une pénalité pour un adhérant en cas de retard.

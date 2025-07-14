@@ -25,7 +25,8 @@ CREATE TABLE TypeAdherant (
     nom_type VARCHAR(100) NOT NULL,
     quota_emprunts INT NOT NULL,
     quota_reservations INT NOT NULL,
-    quota_prolongements INT NOT NULL
+    quota_prolongements INT NOT NULL,
+    jours_penalite INT NOT NULL
 );
 
 -- Table des adhérants

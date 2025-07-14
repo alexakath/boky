@@ -88,6 +88,21 @@ public class RetourService {
             // Utiliser le nombre de jours de pénalité fixe du type d'adhérant
             int joursPenaliteFixe = adherant.getTypeAdherant().getJoursPenalite();
             
+            // Vérification de sécurité : s'assurer que le nombre de jours n'est pas 0
+            if (joursPenaliteFixe <= 0) {
+                // Valeurs par défaut selon le type d'adhérant si non configuré
+                String nomType = adherant.getTypeAdherant().getNomType().toLowerCase();
+                if (nomType.contains("étudiant") || nomType.contains("student")) {
+                    joursPenaliteFixe = 3;
+                } else if (nomType.contains("professionnel") || nomType.contains("professional")) {
+                    joursPenaliteFixe = 5;
+                } else if (nomType.contains("professeur") || nomType.contains("teacher")) {
+                    joursPenaliteFixe = 7;
+                } else {
+                    joursPenaliteFixe = 5; // Valeur par défaut
+                }
+            }
+            
             // Créer une pénalité
             LocalDate dateDebutPenalite = dateRetourReelle;
             LocalDate dateFinPenalite = dateRetourReelle.plusDays(joursPenaliteFixe);
