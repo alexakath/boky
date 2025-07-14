@@ -143,7 +143,7 @@
             
             <div class="menu-item">
                 <h3>Gestion des Pénalités</h3>
-                <p>Suivre et gérer les pénalités</p>
+                <p><a href="/penalites/gerer">Suivre et gérer les pénalités</a></p>
             </div>
             
             <div class="menu-item">

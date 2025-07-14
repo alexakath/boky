@@ -33,6 +33,9 @@ public class Penalite {
     @Column(name = "date_fin_penalite", nullable = false)
     private LocalDate dateFinPenalite;
 
+    @Transient
+    private boolean active; // ✅ Champ ajouté pour savoir si la pénalité est toujours active
+
     public enum TypePenalite {
         RETARD
     }
@@ -47,6 +50,8 @@ public class Penalite {
         this.nombreJours = nombreJours;
         this.dateFinPenalite = dateFinPenalite;
     }
+
+    // Getters & Setters
 
     public Integer getId() {
         return id;
@@ -102,5 +107,13 @@ public class Penalite {
 
     public void setDateFinPenalite(LocalDate dateFinPenalite) {
         this.dateFinPenalite = dateFinPenalite;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

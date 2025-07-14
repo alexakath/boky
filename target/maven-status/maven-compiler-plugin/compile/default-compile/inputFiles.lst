@@ -14,8 +14,10 @@ C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\Jo
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\SecurityConfig.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\BiblioApplication.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Pret.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\PenaliteService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\TypeAdherant.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\ReservationRepository.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\PenaliteController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\TypeAdherantRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\PretService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\ConnexionController.java
