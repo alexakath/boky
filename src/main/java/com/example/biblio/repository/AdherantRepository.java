@@ -8,5 +8,10 @@ import java.util.Optional;
 
 @Repository
 public interface AdherantRepository extends JpaRepository<Adherant, Integer> {
+    
+    // Trouver un adhérant par email
     Optional<Adherant> findByEmail(String email);
+    
+    // Vérifier si un email existe déjà
+    boolean existsByEmail(String email);
 }

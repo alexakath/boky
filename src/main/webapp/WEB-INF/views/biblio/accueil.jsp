@@ -133,7 +133,7 @@
             
             <div class="menu-item">
                 <h3>Gestion des Retours des livres</h3>
-                <p>Enregistrer et suivre les livres rendus</p>
+                <p><a href="/retours/rendre">Enregistrer et suivre les livres rendus</a></p>
             </div>
             
             <div class="menu-item">

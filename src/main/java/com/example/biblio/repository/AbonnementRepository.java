@@ -38,8 +38,12 @@ public interface AbonnementRepository extends JpaRepository<Abonnement, Integer>
     /**
      * Trouve les abonnements actifs d'un adhérant
      */
-    @Query("SELECT a FROM Abonnement a WHERE a.adherant.id = :adherantId " +
-           "AND a.dateDebut <= :currentDate AND a.dateFin >= :currentDate")
-    List<Abonnement> findActiveAbonnementsByAdherantId(@Param("adherantId") Integer adherantId, 
-                                                       @Param("currentDate") LocalDate currentDate);
+//     @Query("SELECT a FROM Abonnement a WHERE a.adherant.id = :adherantId " +
+//            "AND a.dateDebut <= :currentDate AND a.dateFin >= :currentDate")
+//     List<Abonnement> findActiveAbonnementsByAdherantId(@Param("adherantId") Integer adherantId, 
+//                                                        @Param("currentDate") LocalDate currentDate);
+
+           // Trouver les abonnements actifs pour un adhérant à une date donnée
+    @Query("SELECT a FROM Abonnement a WHERE a.adherant.id = :adherantId AND a.dateDebut <= :date AND a.dateFin >= :date")
+    List<Abonnement> findActiveAbonnementsByAdherantId(Integer adherantId, LocalDate date);
 }

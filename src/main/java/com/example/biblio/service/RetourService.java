@@ -1,0 +1,134 @@
+package com.example.biblio.service;
+
+import com.example.biblio.model.*;
+import com.example.biblio.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class RetourService {
+
+    @Autowired
+    private PretRepository pretRepository;
+
+    @Autowired
+    private AdherantRepository adherantRepository;
+
+    @Autowired
+    private ExemplaireRepository exemplaireRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
+    @Autowired
+    private PenaliteRepository penaliteRepository;
+
+    @Autowired
+    private JourFerierService jourFerierService;
+
+    public List<Pret> findAllPretsActifs() {
+        return pretRepository.findPretsActifs();
+    }
+
+    public String rendreLivre(Integer idAdherant, Integer idExemplaire, LocalDate dateRetourReelle, Integer joursPenalite) {
+        // Validation des paramètres
+        if (idAdherant == null || idExemplaire == null || dateRetourReelle == null) {
+            return "Tous les champs sont obligatoires.";
+        }
+
+        // Vérification de l'existence de l'adhérant
+        Optional<Adherant> adherantOpt = adherantRepository.findById(idAdherant);
+        if (!adherantOpt.isPresent()) {
+            return "Adhérant non trouvé.";
+        }
+
+        // Vérification de l'existence de l'exemplaire
+        Optional<Exemplaire> exemplaireOpt = exemplaireRepository.findById(idExemplaire);
+        if (!exemplaireOpt.isPresent()) {
+            return "Exemplaire non trouvé.";
+        }
+
+        Adherant adherant = adherantOpt.get();
+        Exemplaire exemplaire = exemplaireOpt.get();
+
+        // Recherche du prêt actif pour cet adhérant et cet exemplaire
+        List<Pret> pretsActifs = pretRepository.findPretsActifsByAdherant(idAdherant);
+        Pret pretActif = null;
+        
+        for (Pret pret : pretsActifs) {
+            if (pret.getExemplaire().getId().equals(idExemplaire)) {
+                pretActif = pret;
+                break;
+            }
+        }
+
+        if (pretActif == null) {
+            return "Exemplaire non emprunté par cet adhérant.";
+        }
+
+        // Vérification de la date de retour
+        if (dateRetourReelle.isBefore(pretActif.getDatePret())) {
+            return "La date de retour ne peut pas être antérieure à la date d'emprunt.";
+        }
+
+        // Calcul du retard
+        boolean enRetard = dateRetourReelle.isAfter(pretActif.getDateRetourPrevue());
+        
+        // Gestion des pénalités
+        if (enRetard) {
+            // Vérifier si la date de retour tombe un jour férié
+            boolean estJourFerier = jourFerierService.isJourFerier(dateRetourReelle);
+            
+            if (!estJourFerier && joursPenalite != null && joursPenalite > 0) {
+                // Créer une pénalité
+                LocalDate dateDebutPenalite = dateRetourReelle;
+                LocalDate dateFinPenalite = dateRetourReelle.plusDays(joursPenalite);
+                
+                Penalite penalite = new Penalite(
+                    adherant, 
+                    pretActif, 
+                    Penalite.TypePenalite.RETARD, 
+                    dateDebutPenalite, 
+                    joursPenalite, 
+                    dateFinPenalite
+                );
+                
+                penaliteRepository.save(penalite);
+            }
+        }
+
+        // Marquer le prêt comme terminé
+        pretActif.setDateRetourReelle(dateRetourReelle);
+
+        // Vérifier s'il existe une réservation pour cet exemplaire
+        List<Reservation> reservationsEnAttente = reservationRepository.findByExemplaireIdAndStatutOrderByDateReservationAsc(
+            idExemplaire, Reservation.StatutReservation.EN_ATTENTE);
+
+        if (!reservationsEnAttente.isEmpty()) {
+            // Marquer l'exemplaire comme réservé
+            exemplaire.setStatut(Exemplaire.StatutExemplaire.RESERVE);
+            
+            // Marquer la première réservation comme honorée
+            Reservation premiereReservation = reservationsEnAttente.get(0);
+            premiereReservation.setStatut(Reservation.StatutReservation.HONOREE);
+            reservationRepository.save(premiereReservation);
+        } else {
+            // Marquer l'exemplaire comme disponible
+            exemplaire.setStatut(Exemplaire.StatutExemplaire.DISPONIBLE);
+        }
+
+        // Incrémenter le quota d'emprunts de l'adhérant
+        adherant.setQuotaRestantEmprunt(adherant.getQuotaRestantEmprunt() + 1);
+
+        // Enregistrer les modifications
+        pretRepository.save(pretActif);
+        exemplaireRepository.save(exemplaire);
+        adherantRepository.save(adherant);
+
+        return null; // Pas d'erreur
+    }
+}
