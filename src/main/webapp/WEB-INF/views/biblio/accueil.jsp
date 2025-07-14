@@ -148,7 +148,7 @@
             
             <div class="menu-item">
                 <h3>Gestion des jours fériés</h3>
-                <p>Suivre et gérer les jours fériés</p>
+                <p><a href="/jours-feries/gerer">Suivre et gérer les jours fériés</a></p>
             </div>
         </div>
         

@@ -8,6 +8,8 @@ C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\Ad
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\AbonnementService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\JourFerier.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Penalite.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\JourFerierController.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\JourFerierRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\SecurityConfig.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\BiblioApplication.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Pret.java
@@ -18,6 +20,7 @@ C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\PretS
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\ConnexionController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\PretRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Exemplaire.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\JourFerierService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Abonnement.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\PenaliteRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\PretController.java

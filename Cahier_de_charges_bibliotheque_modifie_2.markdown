@@ -1,7 +1,7 @@
 Cahier des charges - Système de gestion de bibliothèque (Version modifiée 3)
 1. Prêter un livre
 
-Nom: Prêter_livre
+Nom: Prêter_livre (CHECK)
 Objectifs: Permettre à un adhérant d'emprunter un exemplaire d'un livre (lecture sur place ou à emporter).
 Acteur: Bibliothécaire
 Entrée:
@@ -37,7 +37,6 @@ Le quota d'emprunts de l'adhérant est décrémenté de 1.
 Un prêt est enregistré pour l'adhérant avec le type de prêt spécifié.
 
 
-
 2. Rendre un livre
 
 Nom: Rendre_livre
@@ -49,14 +48,12 @@ Référence de l'adhérant
 Date de retour réelle
 Nombre de jours de pénalité (si applicable, défini par le bibliothécaire)
 
-
 Scénario nominal:
 Le bibliothécaire se connecte au système.
-Il accède au menu "Rendre un livre".
+Il accède au menu "Gestion des retours des livres".
 Il entre la référence de l'adhérant et celle de l'exemplaire.
 Si un retard est constaté, il spécifie le nombre de jours de pénalité selon le profil.
 Il clique sur le bouton "Rendre".
-
 
 Règles de gestion:
 L'adhérant doit exister dans la base de données.
@@ -65,18 +62,15 @@ Si le retour est en retard (date réelle > date prévue), le bibliothécaire dé
 Pas de pénalité si la date de retour réelle tombe un jour férié.
 Si une réservation existe pour cet exemplaire, il est marqué comme réservé.
 
-
 Scénario alternatif:
 Si l'exemplaire n'est pas emprunté par l'adhérant, afficher une erreur ("Exemplaire non emprunté par cet adhérant").
 Si une pénalité est appliquée, informer l'adhérant de la durée de la sanction.
-
 
 Résultat:
 L'exemplaire redevient disponible (ou réservé si une réservation existe).
 Le quota d'emprunts de l'adhérant est incrémenté de 1.
 Le prêt est marqué comme terminé.
 Une pénalité peut être enregistrée (durée définie par le bibliothécaire).
-
 
 
 3. Réserver un livre
@@ -126,13 +120,11 @@ Référence de l'exemplaire
 Référence de l'adhérant
 Nouvelle date de retour souhaitée
 
-
 Scénario nominal:
 L'utilisateur (bibliothécaire ou adhérant connecté) accède au menu "Prolonger un prêt".
 Il entre la référence de l'adhérant et celle de l'exemplaire.
 Il sélectionne une nouvelle date de retour.
 Il clique sur le bouton "Prolonger".
-
 
 Règles de gestion:
 L'adhérant doit exister dans la base de données.
@@ -142,10 +134,8 @@ Aucune réservation ne doit exister pour cet exemplaire (priorité à la réserv
 L'adhérant ne doit pas avoir de sanction active.
 L'abonnement de l'adhérant doit être valide.
 
-
 Scénario alternatif:
 Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Prolongement non autorisé, exemplaire réservé").
-
 
 Résultat:
 La date de retour du prêt est mise à jour.
@@ -272,35 +262,31 @@ L'adhérant est bloqué pour les emprunts et réservations si la pénalité est 
 
 
 
-8. Gérer les jours fériés
+8. Gérer les jours fériés (CHECK)
 
 Nom: Gérer_jours_fériés
 Objectifs: Enregistrer les jours fériés pour éviter les pénalités de retard.
 Acteur: Bibliothécaire
 Entrée:
 Date du jour férié
-Description (facultatif)
-
+Description
 
 Scénario nominal:
 Le bibliothécaire se connecte au système.
-Il accède au menu "Gérer les jours fériés".
-Il entre la date du jour férié et une description facultative.
+Il accède au menu "Gérer des jours fériés".
+Il entre la date du jour férié et une description .
 Il clique sur le bouton "Enregistrer".
-
 
 Règles de gestion:
 La date doit être valide et unique (pas de doublons).
 La date ne doit pas être antérieure à la date actuelle.
 
-
 Scénario alternatif:
 Si la date est invalide ou déjà enregistrée, afficher une erreur.
 
-
 Résultat:
 Le jour férié est ajouté à la base de données.
-Les pénalités de retard sont désactivées pour cette date.
+Les pénalités de retard sont désactivées pour cette date.(SAUF CECI)
 
 
 
