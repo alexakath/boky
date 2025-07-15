@@ -133,7 +133,7 @@
             
             <div class="menu-item">
                 <h3>Gestion des Retours des livres</h3>
-                <p>Enregistrer et suivre les livres rendus</p>
+                <p><a href="/retours/rendre">Enregistrer et suivre les livres rendus</a></p>
             </div>
             
             <div class="menu-item">
@@ -143,12 +143,12 @@
             
             <div class="menu-item">
                 <h3>Gestion des Pénalités</h3>
-                <p>Suivre et gérer les pénalités</p>
+                <p><a href="/penalites/gerer">Suivre et gérer les pénalités</a></p>
             </div>
             
             <div class="menu-item">
                 <h3>Gestion des jours fériés</h3>
-                <p>Suivre et gérer les jours fériés</p>
+                <p><a href="/jours-feries/gerer">Suivre et gérer les jours fériés</a></p>
             </div>
         </div>
         

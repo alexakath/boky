@@ -103,6 +103,16 @@ CREATE TABLE JourFerier (
     CHECK (date_ferier >= CURDATE())
 );
 
+-- Table pour les demandes de prolongement
+CREATE TABLE DemandeProlongement (
+    id_demande INT AUTO_INCREMENT PRIMARY KEY,
+    id_pret INT NOT NULL,
+    nouvelle_date_retour DATE NOT NULL,
+    date_demande DATE NOT NULL,
+    statut ENUM('EN_ATTENTE', 'ACCEPTEE', 'REFUSEE') NOT NULL DEFAULT 'EN_ATTENTE',
+    motif_refus TEXT,
+    FOREIGN KEY (id_pret) REFERENCES Pret(id_pret) ON DELETE CASCADE
+);
 -- Données pour TypeAdherant
 INSERT INTO TypeAdherant (nom_type, quota_emprunts, quota_reservations, quota_prolongements)
 VALUES ('étudiant', 3, 2, 2),

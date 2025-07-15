@@ -3,8 +3,10 @@ C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Adheran
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\AbonnementController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\AdherantController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\AbonnementRepository.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\DemandeProlongement.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Livre.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\AdherantRepository.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\ProlongementService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\AbonnementService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\AdherantLoginController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\RetourService.java
@@ -32,4 +34,6 @@ C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\Pr
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\ExemplaireRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\RetourController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\AdherantService.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\ProlongementController.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\DemandeProlongementRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\LivreRepository.java

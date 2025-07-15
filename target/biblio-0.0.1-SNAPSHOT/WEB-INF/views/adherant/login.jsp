@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,56 +17,79 @@
             min-height: 100vh;
         }
         
-        .container {
-            background-color: white;
+        .login-container {
+            background: white;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
+            max-width: 400px;
         }
         
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
+        .login-header {
             text-align: center;
-            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #666;
+            margin: 0;
         }
         
         .form-group {
             margin-bottom: 20px;
         }
         
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 5px;
-            color: #555;
+            color: #333;
             font-weight: bold;
         }
         
-        input[type="email"], input[type="password"] {
+        .form-group input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
             box-sizing: border-box;
         }
         
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        
         .btn {
-            background-color: #2196F3;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
             color: white;
-            padding: 12px 30px;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
             font-size: 16px;
-            width: 100%;
+            cursor: pointer;
             transition: background-color 0.3s;
         }
         
         .btn:hover {
-            background-color: #1976D2;
+            background-color: #0056b3;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
         }
         
         .back-link {
@@ -74,18 +98,27 @@
         }
         
         .back-link a {
-            color: #666;
+            color: #007bff;
             text-decoration: none;
         }
         
         .back-link a:hover {
-            color: #333;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Connexion Adhérant</h1>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Connexion Adhérant</h1>
+            <p>Accédez à votre espace personnel</p>
+        </div>
+        
+        <c:if test="${not empty error}">
+            <div class="error-message">
+                ${error}
+            </div>
+        </c:if>
         
         <form action="/login" method="post">
             <div class="form-group">
@@ -94,15 +127,15 @@
             </div>
             
             <div class="form-group">
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
+                <label for="motDePasse">Mot de passe :</label>
+                <input type="password" id="motDePasse" name="motDePasse" required>
             </div>
             
             <button type="submit" class="btn">Se connecter</button>
         </form>
         
         <div class="back-link">
-            <a href="/">← Retour au choix de connexion</a>
+            <a href="/">← Retour à l'accueil</a>
         </div>
     </div>
 </body>
