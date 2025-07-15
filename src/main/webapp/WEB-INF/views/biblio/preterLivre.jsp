@@ -51,7 +51,7 @@
             color: #333;
         }
         
-        input[type="text"], input[type="number"], select {
+        input[type="text"], input[type="number"], input[type="date"], select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
@@ -171,7 +171,87 @@
             margin: 0;
             padding-left: 20px;
         }
+        
+        .date-info {
+            background-color: #fff3e0;
+            border-left: 4px solid #FF9800;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #e65100;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            align-items: end;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .today-btn {
+            background-color: #FF9800;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            height: 42px;
+        }
+        
+        .today-btn:hover {
+            background-color: #F57C00;
+        }
     </style>
+    <script>
+        function setTodayDate() {
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            document.getElementById('datePret').value = todayString;
+            calculateReturnDate();
+        }
+        
+        function calculateReturnDate() {
+            const datePretInput = document.getElementById('datePret');
+            const typePretRadios = document.getElementsByName('typePret');
+            const dateInfoDiv = document.getElementById('dateInfo');
+            
+            if (!datePretInput.value) {
+                dateInfoDiv.innerHTML = '';
+                return;
+            }
+            
+            const datePret = new Date(datePretInput.value);
+            let dateRetour;
+            let typePret = '';
+            
+            for (let radio of typePretRadios) {
+                if (radio.checked) {
+                    typePret = radio.value;
+                    break;
+                }
+            }
+            
+            if (typePret === 'LECTURE_SUR_PLACE') {
+                dateRetour = new Date(datePret);
+                dateInfoDiv.innerHTML = '<strong>Date de retour prévue :</strong> ' + dateRetour.toLocaleDateString('fr-FR') + ' (même jour - lecture sur place)';
+            } else if (typePret === 'A_EMPORTER') {
+                dateRetour = new Date(datePret);
+                dateRetour.setDate(dateRetour.getDate() + 14);
+                dateInfoDiv.innerHTML = '<strong>Date de retour prévue :</strong> ' + dateRetour.toLocaleDateString('fr-FR') + ' (14 jours après le prêt)';
+            } else {
+                dateInfoDiv.innerHTML = 'Veuillez sélectionner un type de prêt pour voir la date de retour.';
+            }
+        }
+        
+        // Initialiser la date d'aujourd'hui au chargement de la page
+        window.onload = function() {
+            setTodayDate();
+        };
+    </script>
 </head>
 <body>
     <div class="header">
@@ -189,6 +269,7 @@
                 <li>L'âge de l'adhérant doit être compatible avec le livre</li>
                 <li>Lecture sur place : retour le même jour</li>
                 <li>À emporter : retour dans 14 jours</li>
+                <li><strong>Nouvelle fonctionnalité :</strong> Vous pouvez saisir manuellement la date de prêt (antérieure ou postérieure à aujourd'hui)</li>
             </ul>
         </div>
         
@@ -214,24 +295,41 @@
                            placeholder="Entrez l'ID de l'exemplaire" min="1">
                 </div>
                 
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="datePret">Date de prêt :</label>
+                        <input type="date" id="datePret" name="datePret" required 
+                               onchange="calculateReturnDate()">
+                    </div>
+                    <button type="button" class="today-btn" onclick="setTodayDate()">
+                        Aujourd'hui
+                    </button>
+                </div>
+                
                 <div class="form-group">
                     <label>Type de prêt :</label>
                     <div class="radio-group">
                         <div class="radio-option">
                             <input type="radio" id="lecture_sur_place" name="typePret" 
-                                   value="LECTURE_SUR_PLACE" required>
+                                   value="LECTURE_SUR_PLACE" required onchange="calculateReturnDate()">
                             <label for="lecture_sur_place">Lecture sur place</label>
                         </div>
                         <div class="radio-option">
                             <input type="radio" id="a_emporter" name="typePret" 
-                                   value="A_EMPORTER" required>
+                                   value="A_EMPORTER" required onchange="calculateReturnDate()">
                             <label for="a_emporter">À emporter</label>
                         </div>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn">Prêter</button>
-                <button type="reset" class="btn btn-secondary">Réinitialiser</button>
+                <div class="date-info" id="dateInfo">
+                    <!-- Les informations de date de retour seront affichées ici -->
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button type="submit" class="btn">Prêter</button>
+                    <button type="reset" class="btn btn-secondary" onclick="setTodayDate()">Réinitialiser</button>
+                </div>
             </form>
         </div>
         

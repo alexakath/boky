@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -27,10 +28,22 @@ public class PretController {
     public String preterLivre(
             @RequestParam("idAdherant") Integer idAdherant,
             @RequestParam("idExemplaire") Integer idExemplaire,
+            @RequestParam("datePret") String datePretStr,
             @RequestParam("typePret") String typePret,
             Model model) {
 
-        String error = pretService.preterLivre(idAdherant, idExemplaire, typePret);
+        // Validation et conversion de la date
+        LocalDate datePret;
+        try {
+            datePret = LocalDate.parse(datePretStr);
+        } catch (Exception e) {
+            model.addAttribute("error", "Format de date invalide. Veuillez utiliser le format YYYY-MM-DD.");
+            List<Pret> pretsActifs = pretService.findAllPretsActifs();
+            model.addAttribute("pretsActifs", pretsActifs);
+            return "biblio/preterLivre";
+        }
+
+        String error = pretService.preterLivre(idAdherant, idExemplaire, datePret, typePret);
 
         if (error != null) {
             model.addAttribute("error", error);

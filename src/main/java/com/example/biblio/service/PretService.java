@@ -32,9 +32,9 @@ public class PretService {
         return pretRepository.findPretsActifs();
     }
 
-    public String preterLivre(Integer idAdherant, Integer idExemplaire, String typePret) {
+    public String preterLivre(Integer idAdherant, Integer idExemplaire, LocalDate datePret, String typePret) {
         // Validation des paramètres
-        if (idAdherant == null || idExemplaire == null || typePret == null) {
+        if (idAdherant == null || idExemplaire == null || datePret == null || typePret == null) {
             return "Tous les champs sont obligatoires.";
         }
 
@@ -53,17 +53,16 @@ public class PretService {
         Adherant adherant = adherantOpt.get();
         Exemplaire exemplaire = exemplaireOpt.get();
 
-        // Vérification de la validité de l'abonnement
-        LocalDate today = LocalDate.now();
-        List<Abonnement> abonnementsActifs = abonnementRepository.findActiveAbonnementsByAdherantId(idAdherant, today);
+        // Vérification de la validité de l'abonnement à la date de prêt
+        List<Abonnement> abonnementsActifs = abonnementRepository.findActiveAbonnementsByAdherantId(idAdherant, datePret);
         if (abonnementsActifs.isEmpty()) {
-            return "Adhérant non abonné ou abonnement expiré.";
+            return "L'adhérant n'a pas d'abonnement valide à la date de prêt sélectionnée (" + datePret + ").";
         }
 
-        // Vérification de l'absence de pénalité active
-        List<Penalite> penalitesActives = penaliteRepository.findByAdherantIdAndDateFinPenaliteAfter(idAdherant, today);
+        // Vérification de l'absence de pénalité active à la date de prêt
+        List<Penalite> penalitesActives = penaliteRepository.findByAdherantIdAndDateFinPenaliteAfter(idAdherant, datePret);
         if (!penalitesActives.isEmpty()) {
-            return "Adhérant sous pénalité active. Impossible d'emprunter.";
+            return "Adhérant sous pénalité active à la date de prêt sélectionnée. Impossible d'emprunter.";
         }
 
         // Vérification du quota d'emprunts
@@ -76,23 +75,24 @@ public class PretService {
             return "Exemplaire non disponible.";
         }
 
-        // Vérification de l'âge de l'adhérant
-        int ageAdherant = Period.between(adherant.getDateNaissance(), today).getYears();
+        // Vérification de l'âge de l'adhérant à la date de prêt
+        int ageAdherant = Period.between(adherant.getDateNaissance(), datePret).getYears();
         if (ageAdherant < exemplaire.getLivre().getAgeMinimum()) {
-            return "Livre non adapté à l'âge de l'adhérant. Âge minimum requis : " + exemplaire.getLivre().getAgeMinimum() + " ans.";
+            return "Livre non adapté à l'âge de l'adhérant à la date de prêt. Âge minimum requis : " + 
+                   exemplaire.getLivre().getAgeMinimum() + " ans. Âge de l'adhérant à cette date : " + ageAdherant + " ans.";
         }
 
-        // Calcul de la date de retour
+        // Calcul de la date de retour basée sur la date de prêt
         LocalDate dateRetourPrevue;
         if ("LECTURE_SUR_PLACE".equals(typePret)) {
-            dateRetourPrevue = today; // Même jour pour lecture sur place
+            dateRetourPrevue = datePret; // Même jour pour lecture sur place
         } else {
-            dateRetourPrevue = today.plusDays(14); // 14 jours pour emporter
+            dateRetourPrevue = datePret.plusDays(14); // 14 jours après la date de prêt
         }
 
         // Création du prêt
         Pret.TypePret typePretEnum = Pret.TypePret.valueOf(typePret);
-        Pret pret = new Pret(exemplaire, adherant, today, dateRetourPrevue, typePretEnum);
+        Pret pret = new Pret(exemplaire, adherant, datePret, dateRetourPrevue, typePretEnum);
 
         // Mise à jour du statut de l'exemplaire
         exemplaire.setStatut(Exemplaire.StatutExemplaire.EMPRUNTE);
@@ -106,5 +106,10 @@ public class PretService {
         adherantRepository.save(adherant);
 
         return null; // Pas d'erreur
+    }
+
+    // Méthode pour maintenir la compatibilité avec l'ancienne version
+    public String preterLivre(Integer idAdherant, Integer idExemplaire, String typePret) {
+        return preterLivre(idAdherant, idExemplaire, LocalDate.now(), typePret);
     }
 }
