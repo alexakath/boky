@@ -268,7 +268,7 @@
                                             </form>
                                             
                                             <button type="button" class="btn btn-danger" 
-                                                    onclick="openRejectModal(${demande.id})">
+                                                    onclick="openRejectModal('${demande.id}')">
                                                 Rejeter
                                             </button>
                                         </div>

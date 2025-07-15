@@ -142,6 +142,25 @@ Résultat:
 La date de retour du prêt est mise à jour.
 Le compteur de prolongements est incrémenté.
 
+2- Acteur: Bibliothécaire
+Entrée:
+les demandes de prolongements vennant de "prolonger un prêt" de l'utilisateur adhérant
+
+Scénario nominal:
+Le bibliothécaire se connecte au système.
+Il accède au menu "Gestion des Prolongements".
+Une liste de tous les demandes de prolongement est afficher avec les bouttons "valider" et "rejeter" sur chaque demande
+
+Règles de gestion:
+le bibliothécaire valide ou non les demandes et un message est envoyé("validé" ou "rejeter" à l'adhérant selon le choix du bibliothécaire.
+le demande de l'adhérant change automatiquement après validation du bibliothécaire
+
+Scénario alternatif:
+Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Erreur lors du prolongement d'un livre").
+
+Résultat:
+une liste des demande de prolongement est affiché avec les bouttons "valider" et "rejeter"
+un message de validité est envoyé au adhérant après validation 
 
 5. Ajouter un adhérant(CHECK)
 
