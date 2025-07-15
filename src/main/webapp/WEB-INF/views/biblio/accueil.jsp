@@ -108,7 +108,7 @@
         <div class="menu-grid">
             <div class="menu-item">
                 <h3>Gestion des Livres</h3>
-                <p>Ajouter, modifier et supprimer des livres</p>
+                <p><a href="/livres/lister">Ajouter, modifier et supprimer des livres</a></p>
             </div>
             
             <div class="menu-item">
