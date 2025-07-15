@@ -113,26 +113,27 @@ L'exemplaire reste indisponible jusqu'à ce que la réservation soit honorée ou
 4. Prolonger un prêt
 
 Nom: Prolonger_prêt
-Objectifs: Permettre à un adhérant de prolonger la durée d'un prêt.
-Acteur: Bibliothécaire ou Adhérant (via login)
+Objectifs: Permettre à un adhérant de faire un demande pour prolonger la durée d'un prêt.
+Acteur: Adhérant (via login)
 Entrée:
 Référence de l'exemplaire
-Référence de l'adhérant
 Nouvelle date de retour souhaitée
 
 Scénario nominal:
-L'utilisateur (bibliothécaire ou adhérant connecté) accède au menu "Prolonger un prêt".
-Il entre la référence de l'adhérant et celle de l'exemplaire.
+L'utilisateur  adhérant accède au menu "Prolongement".
+Il entre la référence de l'exemplaire.
 Il sélectionne une nouvelle date de retour.
 Il clique sur le bouton "Prolonger".
 
 Règles de gestion:
 L'adhérant doit exister dans la base de données.
 L'exemplaire doit être actuellement emprunté par cet adhérant.
-Le nombre de prolongements autorisés (défini par le bibliothécaire pour le type : étudiant, professionnel, professeur) n'est pas dépassé.
+Le nombre de prolongements autorisés n'est pas dépassé.
 Aucune réservation ne doit exister pour cet exemplaire (priorité à la réservation).
 L'adhérant ne doit pas avoir de sanction active.
 L'abonnement de l'adhérant doit être valide.
+un demande de prolongement est envoyer au bibliothécaire (le bibliothécaire a le droit d'accepter et de refusé la demande)
+le demande de prolongement n'est valide qu'après la validation du bibliothécaire 
 
 Scénario alternatif:
 Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Prolongement non autorisé, exemplaire réservé").
@@ -278,7 +279,7 @@ Les pénalités de retard sont désactivées pour cette date.(SAUF CECI)
 
 
 
-9. Connexion adhérant
+9. Connexion adhérant (CHECK)
 
 Nom: Connexion_adhérant
 Objectifs: Permettre à un adhérant de se connecter au système pour accéder à ses fonctionnalités (réservation, prolongement, renouvellement d'abonnement).
@@ -301,25 +302,3 @@ Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Ident
 
 Résultat:
 L'adhérant est connecté et peut accéder aux fonctionnalités autorisées (réservation, prolongement, renouvellement d'abonnement).
-
-
-10. Dashboard
-
-Nom: Dashboard
-Objectifs: Permettre à un adhérant de voir tous ses activités dans son menu dashboard.
-1-Acteur:Adhérant
-Entrée:
-tous activités effectuer par l'adhérant
-
-Scénario nominal:
-L'utilisateur adhérant se connecte à son compte via login
-Un dashboard de ses activités est afficher après sa connection
- 
-Règles de gestion:
-L'adhérant doit exister dans la base de données.
-L'abonnement de l'adhérant doit être valide (abonnement active).
-l'adhérant peut voir ses abonnement, ses pénalités, ses informations personnelles, faire un suivi de ses prêts, voir les jours fériés de la bibliotheque, faire un demande de prolongement et de réservation
-l'adhérant peut voir la liste des livres dans la bibliothèque
-
-Résultat:
-un dashboard et la liste de tous les livres est afficher

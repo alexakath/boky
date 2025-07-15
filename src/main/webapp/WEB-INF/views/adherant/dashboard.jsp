@@ -56,6 +56,7 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
+            margin-top: 30px;
         }
         
         .card {
@@ -77,7 +78,7 @@
         }
         
         .card-btn {
-            background-color: #007bff;
+            background-color: #6ea6e2;
             color: white;
             padding: 12px 25px;
             text-decoration: none;
@@ -87,7 +88,7 @@
         }
         
         .card-btn:hover {
-            background-color: #0056b3;
+            background-color: #405c7a;
         }
         
         .card-btn.secondary {
@@ -97,6 +98,15 @@
         .card-btn.secondary:hover {
             background-color: #5a6268;
         }
+
+        .card-btn.third{
+            background-color: #578073;
+        }
+
+        .card-btn.third:hover{
+            background-color: #567068;
+        }
+        
         
         .card-btn.success {
             background-color: #28a745;
@@ -147,26 +157,6 @@
     </div>
     
     <div class="main-content">
-        <div class="dashboard-grid">
-            <div class="card">
-                <h3>Réservation</h3>
-                <p>Réservez un livre disponible dans notre catalogue</p>
-                <a href="/adherant/reservations" class="card-btn">Faire une réservation</a>
-            </div>
-            
-            <div class="card">
-                <h3>Prolongement</h3>
-                <p>Prolongez vos emprunts en cours</p>
-                <a href="/adherant/prolongements" class="card-btn secondary">Prolonger un prêt</a>
-            </div>
-            
-            <div class="card">
-                <h3>Renouvellement d'abonnement</h3>
-                <p>Renouvelez votre abonnement à la bibliothèque</p>
-                <a href="/adherant/renouvellement" class="card-btn success">Renouveler</a>
-            </div>
-        </div>
-        
         <div class="user-info">
             <h2>Informations personnelles</h2>
             <div class="info-row">
@@ -198,6 +188,45 @@
                 <span class="info-value">${adherant.quotaRestantProlog}</span>
             </div>
         </div>
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Réservation</h3>
+                <p>Réservez un livre disponible dans notre catalogue</p>
+                <a href="/adherant/reservations" class="card-btn">Faire une réservation</a>
+            </div>
+            
+            <div class="card">
+                <h3>Prolongement</h3>
+                <p>Prolongez vos emprunts en cours</p>
+                <a href="/adherant/prolongements" class="card-btn secondary">Prolonger un prêt</a>
+            </div>
+
+            <div class="card">
+                <h3>Jours Fériés</h3>
+                <p>Soyez au courant de nos jours fériés</p>
+                <a href="/adherant/jourFerier" class="card-btn third">Aller Voir ></a>
+            </div>
+            
+            <div class="card">
+                <h3>Mon abonnement</h3>
+                <p>Suivez votre abonnement à la bibliothèque</p>
+                <a href="/adherant/abonnement" class="card-btn success">Voir Abonnement</a>
+            </div>
+            
+            <div class="card">
+                <h3>Mes pénalités</h3>
+                <p>Suivez votre pénalité</p>
+                <a href="/adherant/penalite" class="card-btn success">Voir Pénalité</a>
+            </div>
+
+            <div class="card">
+                <h3>Mon prêts</h3>
+                <p>Suivez votre prêt à la bibliothèque</p>
+                <a href="/adherant/pret" class="card-btn success">Voir Prêt</a>
+            </div>
+        </div>
+        
+        
     </div>
 </body>
 </html>
