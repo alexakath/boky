@@ -23,10 +23,10 @@ public class ConnexionController {
         return "redirect:/";
     }
 
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "adherant/login";
-    }
+    // @GetMapping("/login")
+    // public String showLoginPage() {
+    //     return "adherant/login";
+    // }
 
     @GetMapping("/accueil")
     public String showAccueilPage() {

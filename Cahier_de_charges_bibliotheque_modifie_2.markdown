@@ -98,7 +98,7 @@ Le quota de réservations de l'adhérant (défini par le bibliothécaire pour le
 L'adhérant ne doit pas avoir de sanction active.
 L'abonnement de l'adhérant doit être valide (date actuelle entre date de début et date de fin).
 Le livre doit être adapté à l'âge de l'adhérant (ex. : certains livres réservés aux 18 ans et plus).
-
+le prolongement ou le reservation qui arrive en premier est en priorite
 
 Scénario alternatif:
 Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Adhérant sanctionné", "Exemplaire déjà réservé" ou "Livre non adapté à l'âge").
@@ -284,28 +284,42 @@ Nom: Connexion_adhérant
 Objectifs: Permettre à un adhérant de se connecter au système pour accéder à ses fonctionnalités (réservation, prolongement, renouvellement d'abonnement).
 Acteur: Adhérant
 Entrée:
-Login
+Email
 Mot de passe
-
 
 Scénario nominal:
 L'adhérant accède à l'interface de connexion.
-Il entre son login et son mot de passe.
+Il entre son email et son mot de passe.
 Il clique sur le bouton "Se connecter".
 
-
 Règles de gestion:
-Le login et le mot de passe doivent correspondre à un adhérant existant.
+L'email et le mot de passe doivent correspondre à un adhérant existant.
 L'abonnement de l'adhérant doit être valide (date actuelle entre date de début et date de fin).
-L'adhérant ne doit pas avoir de sanction active.
-
 
 Scénario alternatif:
 Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Identifiants incorrects" ou "Compte sanctionné").
-
 
 Résultat:
 L'adhérant est connecté et peut accéder aux fonctionnalités autorisées (réservation, prolongement, renouvellement d'abonnement).
 
 
-le prolongement ou le reservation qui arrive en premier est en priorite
+10. Dashboard
+
+Nom: Dashboard
+Objectifs: Permettre à un adhérant de voir tous ses activités dans son menu dashboard.
+1-Acteur:Adhérant
+Entrée:
+tous activités effectuer par l'adhérant
+
+Scénario nominal:
+L'utilisateur adhérant se connecte à son compte via login
+Un dashboard de ses activités est afficher après sa connection
+ 
+Règles de gestion:
+L'adhérant doit exister dans la base de données.
+L'abonnement de l'adhérant doit être valide (abonnement active).
+l'adhérant peut voir ses abonnement, ses pénalités, ses informations personnelles, faire un suivi de ses prêts, voir les jours fériés de la bibliotheque, faire un demande de prolongement et de réservation
+l'adhérant peut voir la liste des livres dans la bibliothèque
+
+Résultat:
+un dashboard et la liste de tous les livres est afficher
