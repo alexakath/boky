@@ -128,7 +128,7 @@
             
             <div class="menu-item">
                 <h3>Gestion des Prolongements</h3>
-                <p>Suivre les demandes de prolongement des livres</p>
+                <p><a href="/prolongements/gerer">Suivre les demandes de prolongement des livres</a></p>
             </div>
             
             <div class="menu-item">

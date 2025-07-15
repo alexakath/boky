@@ -110,7 +110,7 @@ L'exemplaire reste indisponible jusqu'à ce que la réservation soit honorée ou
 
 
 
-4. Prolonger un prêt
+4. Prolonger un prêt (CHECK)
 
 Nom: Prolonger_prêt
 Objectifs: Permettre à un adhérant de faire un demande pour prolonger la durée d'un prêt.
@@ -141,11 +141,6 @@ Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Prolo
 Résultat:
 La date de retour du prêt est mise à jour.
 Le compteur de prolongements est incrémenté.
-
-2- Acteur:  bibliothecaire
-Entrée:
-Référence de l'exemplaire
-Nouvelle date de retour souhaitée
 
 
 5. Ajouter un adhérant(CHECK)
