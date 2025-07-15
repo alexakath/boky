@@ -143,7 +143,6 @@ La date de retour du prêt est mise à jour.
 Le compteur de prolongements est incrémenté.
 
 
-
 5. Ajouter un adhérant(CHECK)
 
 Nom: Ajouter_adhérant
