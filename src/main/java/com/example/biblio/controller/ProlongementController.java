@@ -24,9 +24,9 @@ public class ProlongementController {
     @GetMapping("/prolongements")
     public String showProlongements(Model model, HttpSession session) {
         // Récupération de l'adhérant depuis la session
-        Adherant adherant = (Adherant) session.getAttribute("adherant");
+        Adherant adherant = (Adherant) session.getAttribute("adherantConnecte");
         if (adherant == null) {
-            return "redirect:/adherant/login";
+            return "redirect:/login";
         }
 
         // Récupération des prêts actifs de l'adhérant
@@ -48,9 +48,9 @@ public class ProlongementController {
             HttpSession session) {
 
         // Récupération de l'adhérant depuis la session
-        Adherant adherant = (Adherant) session.getAttribute("adherant");
+        Adherant adherant = (Adherant) session.getAttribute("adherantConnecte");
         if (adherant == null) {
-            return "redirect:/adherant/login";
+            return "redirect:/login";
         }
 
         try {

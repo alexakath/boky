@@ -208,7 +208,7 @@
                                 <c:forEach var="pret" items="${pretsActifs}">
                                     <option value="${pret.exemplaire.id}">
                                         ${pret.exemplaire.livre.titre} - ${pret.exemplaire.livre.auteur} 
-                                        (Retour prévu: <fmt:formatDate value="${pret.dateRetourPrevue}" pattern="dd/MM/yyyy"/>)
+                                        (Retour prévu: ${pret.dateRetourPrevue})
                                         [${pret.nombreProlongements} prolongement(s) effectué(s)]
                                     </option>
                                 </c:forEach>
@@ -255,8 +255,8 @@
                                 <tr>
                                     <td>${pret.exemplaire.livre.titre}</td>
                                     <td>${pret.exemplaire.livre.auteur}</td>
-                                    <td><fmt:formatDate value="${pret.datePret}" pattern="dd/MM/yyyy"/></td>
-                                    <td><fmt:formatDate value="${pret.dateRetourPrevue}" pattern="dd/MM/yyyy"/></td>
+                                    <td>${pret.datePret}</td>
+                                    <td>${pret.dateRetourPrevue}</td>
                                     <td>${pret.nombreProlongements}</td>
                                     <td>${pret.typePret}</td>
                                 </tr>
@@ -290,8 +290,8 @@
                             <c:forEach var="demande" items="${demandes}">
                                 <tr>
                                     <td>${demande.pret.exemplaire.livre.titre}</td>
-                                    <td><fmt:formatDate value="${demande.dateDemande}" pattern="dd/MM/yyyy"/></td>
-                                    <td><fmt:formatDate value="${demande.nouvelleDateRetour}" pattern="dd/MM/yyyy"/></td>
+                                    <td>${demande.dateDemande}</td>
+                                    <td>${demande.nouvelleDateRetour}</td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${demande.statut == 'EN_ATTENTE'}">
