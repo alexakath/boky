@@ -28,17 +28,26 @@ public class TypeAdherant {
     @Column(name = "jours_penalite", nullable = false)
     private int joursPenalite;
 
+    @Column(name = "jours_pret", nullable = false)
+    private int joursPret = 14; // Valeur par défaut de 14 jours
+
     @OneToMany(mappedBy = "typeAdherant")
     private Set<Adherant> adherants = new HashSet<>();
 
     public TypeAdherant() {}
 
-    public TypeAdherant(String nomType, int quotaEmprunts, int quotaReservations, int quotaProlongements, int joursPenalite) {
+    public TypeAdherant(String nomType, int quotaEmprunts, int quotaReservations, int quotaProlongements, int joursPenalite, int joursPret) {
         this.nomType = nomType;
         this.quotaEmprunts = quotaEmprunts;
         this.quotaReservations = quotaReservations;
         this.quotaProlongements = quotaProlongements;
         this.joursPenalite = joursPenalite;
+        this.joursPret = joursPret;
+    }
+
+    // Constructeur pour compatibilité avec l'ancienne version
+    public TypeAdherant(String nomType, int quotaEmprunts, int quotaReservations, int quotaProlongements, int joursPenalite) {
+        this(nomType, quotaEmprunts, quotaReservations, quotaProlongements, joursPenalite, 14);
     }
 
     public Integer getId() {
@@ -87,6 +96,14 @@ public class TypeAdherant {
 
     public void setJoursPenalite(int joursPenalite) {
         this.joursPenalite = joursPenalite;
+    }
+
+    public int getJoursPret() {
+        return joursPret;
+    }
+
+    public void setJoursPret(int joursPret) {
+        this.joursPret = joursPret;
     }
 
     public Set<Adherant> getAdherants() {

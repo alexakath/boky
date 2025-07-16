@@ -82,12 +82,14 @@ public class PretService {
                    exemplaire.getLivre().getAgeMinimum() + " ans. Âge de l'adhérant à cette date : " + ageAdherant + " ans.";
         }
 
-        // Calcul de la date de retour basée sur la date de prêt
+        // Calcul de la date de retour basée sur le type d'adhérant et le type de prêt
         LocalDate dateRetourPrevue;
         if ("LECTURE_SUR_PLACE".equals(typePret)) {
             dateRetourPrevue = datePret; // Même jour pour lecture sur place
         } else {
-            dateRetourPrevue = datePret.plusDays(14); // 14 jours après la date de prêt
+            // Pour les prêts à emporter, utiliser le nombre de jours de prêt du type d'adhérant
+            int joursPret = adherant.getTypeAdherant().getJoursPret();
+            dateRetourPrevue = datePret.plusDays(joursPret);
         }
 
         // Création du prêt
@@ -111,5 +113,21 @@ public class PretService {
     // Méthode pour maintenir la compatibilité avec l'ancienne version
     public String preterLivre(Integer idAdherant, Integer idExemplaire, String typePret) {
         return preterLivre(idAdherant, idExemplaire, LocalDate.now(), typePret);
+    }
+
+    // Méthode utilitaire pour calculer la date de retour prévue
+    public LocalDate calculerDateRetourPrevue(Integer idAdherant, LocalDate datePret, String typePret) {
+        if ("LECTURE_SUR_PLACE".equals(typePret)) {
+            return datePret;
+        }
+        
+        Optional<Adherant> adherantOpt = adherantRepository.findById(idAdherant);
+        if (adherantOpt.isPresent()) {
+            int joursPret = adherantOpt.get().getTypeAdherant().getJoursPret();
+            return datePret.plusDays(joursPret);
+        }
+        
+        // Valeur par défaut si l'adhérant n'est pas trouvé
+        return datePret.plusDays(14);
     }
 }

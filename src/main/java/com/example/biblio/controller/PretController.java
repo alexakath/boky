@@ -54,4 +54,21 @@ public class PretController {
 
         return "redirect:/prets/preter";
     }
+
+    // Nouvel endpoint pour calculer la date de retour en temps réel
+    @GetMapping("/calculer-date-retour")
+    @ResponseBody
+    public String calculerDateRetour(
+            @RequestParam("idAdherant") Integer idAdherant,
+            @RequestParam("datePret") String datePretStr,
+            @RequestParam("typePret") String typePret) {
+        
+        try {
+            LocalDate datePret = LocalDate.parse(datePretStr);
+            LocalDate dateRetour = pretService.calculerDateRetourPrevue(idAdherant, datePret, typePret);
+            return dateRetour.toString();
+        } catch (Exception e) {
+            return "error";
+        }
+    }
 }
