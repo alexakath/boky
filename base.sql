@@ -80,6 +80,19 @@ CREATE TABLE Reservation (
     FOREIGN KEY (id_adherant) REFERENCES Adherant(id_adherant) ON DELETE CASCADE
 );
 
+-- Table pour les demandes de réservation
+CREATE TABLE DemandeReservation (
+    id_demande_reservation INT AUTO_INCREMENT PRIMARY KEY,
+    id_exemplaire INT NOT NULL,
+    id_adherant INT NOT NULL,
+    date_demande DATE NOT NULL,
+    statut ENUM('EN_ATTENTE', 'ACCEPTEE', 'REFUSEE', 'ANNULEE') NOT NULL DEFAULT 'EN_ATTENTE',
+    motif_refus TEXT,
+    date_validation DATE,
+    FOREIGN KEY (id_exemplaire) REFERENCES Exemplaire(id_exemplaire) ON DELETE CASCADE,
+    FOREIGN KEY (id_adherant) REFERENCES Adherant(id_adherant) ON DELETE CASCADE
+);
+
 -- Table des pénalités
 CREATE TABLE Penalite (
     id_penalite INT AUTO_INCREMENT PRIMARY KEY,

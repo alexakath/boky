@@ -1,7 +1,7 @@
 Cahier des charges - Système de gestion de bibliothèque (Version modifiée 3)
-1. Prêter un livre
+1. Prêter un livre(CHECK)
 
-Nom: Prêter_livre (CHECK)
+Nom: Prêter_livre 
 Objectifs: Permettre à un adhérant d'emprunter un exemplaire d'un livre (lecture sur place ou à emporter).
 Acteur: Bibliothécaire
 Entrée:
@@ -77,35 +77,35 @@ Une pénalité peut être enregistrée (durée définie par le bibliothécaire).
 
 Nom: Réserver_livre
 Objectifs: Permettre à un adhérant de réserver un exemplaire non disponible.
-Acteur: Bibliothécaire ou Adhérant (via login)
+Acteur: Adhérant (via login)
 Entrée:
-Référence de l'exemplaire
-Référence de l'adhérant
+Référence de l'exemplaire d'un livre 
 Date de réservation
 
-
 Scénario nominal:
-L'utilisateur (bibliothécaire ou adhérant connecté) accède au menu "Réserver un livre".
-Il entre la référence de l'adhérant et celle de l'exemplaire.
+L'utilisateur adhérant connecté accède au menu "Réservation".
+Il entre la référence de l'exemplaire du livre qu'il veut réserver.
 Il verifie la disponibilité de l'exemplaire
 Il clique sur le bouton "Réserver".
 
-
 Règles de gestion:
 L'adhérant doit exister dans la base de données.
-L'exemplaire doit être indisponible (emprunté ou déjà réservé).
+L'exemplaire du livre doit être indisponible (emprunté ou déjà réservé).
 Le quota de réservations de l'adhérant (défini par le bibliothécaire pour le type : étudiant, professionnel, professeur) ne doit pas être dépassé.
 L'adhérant ne doit pas avoir de sanction active.
-L'abonnement de l'adhérant doit être valide (date actuelle entre date de début et date de fin).
+L'abonnement de l'adhérant doit être valide.
 Le livre doit être adapté à l'âge de l'adhérant (ex. : certains livres réservés aux 18 ans et plus).
-le prolongement ou le reservation qui arrive en premier est en priorite
+le prolongement ou la réservation qui arrive en premier est en prioritaire
+un demande de réservation est envoyer au bibliothécaire (le bibliothécaire a le droit d'accepter et de refusé la demande)
+le demande de réservation n'est valide qu'après la validation du bibliothécaire 
+plusieurs adhérant peut réserver un même exemplaire d'un livre tant que la réservation n'est pas valider par le bibliothécaire
 
 Scénario alternatif:
-Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Adhérant sanctionné", "Exemplaire déjà réservé" ou "Livre non adapté à l'âge").
-
+Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "réservation rejeter", "Exemplaire déjà réservé" ou "Livre non adapté à l'âge").
 
 Résultat:
 Une réservation est enregistrée pour l'exemplaire.
+un demande de réservation est envoyé au bibliothecaire
 L'exemplaire reste indisponible jusqu'à ce que la réservation soit honorée ou annulée.
 
 

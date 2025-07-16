@@ -5,9 +5,11 @@ C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\Ad
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\AbonnementRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\DemandeProlongement.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\Livre.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\ReservationService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\AdherantRepository.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\ProlongementService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\AbonnementService.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\ReservationController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\AdherantLoginController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\RetourService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\JourFerier.java
@@ -42,4 +44,5 @@ C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\Re
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\service\AdherantService.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\controller\ProlongementController.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\DemandeProlongementRepository.java
+C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\model\DemandeReservation.java
 C:\Users\Alexa\Desktop\Naina\boky\src\main\java\com\example\biblio\repository\LivreRepository.java
