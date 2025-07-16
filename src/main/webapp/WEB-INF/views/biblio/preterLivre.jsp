@@ -205,6 +205,29 @@
         .today-btn:hover {
             background-color: #F57C00;
         }
+        
+        .loading {
+            display: none;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .type-info {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .adherant-info {
+            background-color: #e8f5e8;
+            border-left: 4px solid #4caf50;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
     </style>
     <script>
         function setTodayDate() {
@@ -216,18 +239,22 @@
         
         function calculateReturnDate() {
             const datePretInput = document.getElementById('datePret');
+            const idAdherantInput = document.getElementById('idAdherant');
             const typePretRadios = document.getElementsByName('typePret');
             const dateInfoDiv = document.getElementById('dateInfo');
+            const loadingDiv = document.getElementById('loading');
             
             if (!datePretInput.value) {
-                dateInfoDiv.innerHTML = '';
+                dateInfoDiv.innerHTML = 'Veuillez sélectionner une date de prêt.';
                 return;
             }
             
-            const datePret = new Date(datePretInput.value);
-            let dateRetour;
-            let typePret = '';
+            if (!idAdherantInput.value) {
+                dateInfoDiv.innerHTML = 'Veuillez saisir l\'ID de l\'adhérant.';
+                return;
+            }
             
+            let typePret = '';
             for (let radio of typePretRadios) {
                 if (radio.checked) {
                     typePret = radio.value;
@@ -235,16 +262,55 @@
                 }
             }
             
-            if (typePret === 'LECTURE_SUR_PLACE') {
-                dateRetour = new Date(datePret);
-                dateInfoDiv.innerHTML = '<strong>Date de retour prévue :</strong> ' + dateRetour.toLocaleDateString('fr-FR') + ' (même jour - lecture sur place)';
-            } else if (typePret === 'A_EMPORTER') {
-                dateRetour = new Date(datePret);
-                dateRetour.setDate(dateRetour.getDate() + 14);
-                dateInfoDiv.innerHTML = '<strong>Date de retour prévue :</strong> ' + dateRetour.toLocaleDateString('fr-FR') + ' (14 jours après le prêt)';
-            } else {
-                dateInfoDiv.innerHTML = 'Veuillez sélectionner un type de prêt pour voir la date de retour.';
+            if (!typePret) {
+                dateInfoDiv.innerHTML = 'Veuillez sélectionner un type de prêt.';
+                return;
             }
+            
+            // Afficher le loading
+            loadingDiv.style.display = 'block';
+            dateInfoDiv.innerHTML = '';
+            
+            // Appel AJAX pour calculer la date de retour
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/prets/calculer-date-retour?idAdherant=' + 
+                     encodeURIComponent(idAdherantInput.value) + 
+                     '&datePret=' + encodeURIComponent(datePretInput.value) + 
+                     '&typePret=' + encodeURIComponent(typePret));
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    loadingDiv.style.display = 'none';
+                    
+                    if (xhr.status === 200) {
+                        const dateRetour = xhr.responseText;
+                        
+                        if (dateRetour === 'error') {
+                            dateInfoDiv.innerHTML = '<span style="color: #d32f2f;">Erreur lors du calcul de la date de retour. Vérifiez l\'ID de l\'adhérant.</span>';
+                        } else {
+                            const dateRetourObj = new Date(dateRetour);
+                            const datePretObj = new Date(datePretInput.value);
+                            
+                            if (typePret === 'LECTURE_SUR_PLACE') {
+                                dateInfoDiv.innerHTML = '<strong>Date de retour prévue :</strong> ' + 
+                                                      dateRetourObj.toLocaleDateString('fr-FR') + 
+                                                      ' <em>(même jour - lecture sur place)</em>';
+                            } else {
+                                const diffTime = Math.abs(dateRetourObj - datePretObj);
+                                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                                
+                                dateInfoDiv.innerHTML = '<strong>Date de retour prévue :</strong> ' + 
+                                                      dateRetourObj.toLocaleDateString('fr-FR') + 
+                                                      ' <em>(' + diffDays + ' jour(s) après le prêt selon le type d\'adhérant)</em>';
+                            }
+                        }
+                    } else {
+                        dateInfoDiv.innerHTML = '<span style="color: #d32f2f;">Erreur de communication avec le serveur.</span>';
+                    }
+                }
+            };
+            
+            xhr.send();
         }
         
         // Initialiser la date d'aujourd'hui au chargement de la page
@@ -268,7 +334,7 @@
                 <li>Le quota d'emprunts ne doit pas être dépassé</li>
                 <li>L'âge de l'adhérant doit être compatible avec le livre</li>
                 <li>Lecture sur place : retour le même jour</li>
-                <li>À emporter : retour dans 14 jours</li>
+                <li>À emporter : durée selon le type d'adhérant (Étudiant: 7j, Enseignant: 9j, Professionnel: 12j)</li>
                 <li><strong>Nouvelle fonctionnalité :</strong> Vous pouvez saisir manuellement la date de prêt (antérieure ou postérieure à aujourd'hui)</li>
             </ul>
         </div>
@@ -286,7 +352,8 @@
                 <div class="form-group">
                     <label for="idAdherant">ID Adhérant :</label>
                     <input type="number" id="idAdherant" name="idAdherant" required 
-                           placeholder="Entrez l'ID de l'adhérant" min="1">
+                           placeholder="Entrez l'ID de l'adhérant" min="1" 
+                           onchange="calculateReturnDate()" onblur="calculateReturnDate()">
                 </div>
                 
                 <div class="form-group">
@@ -322,6 +389,18 @@
                     </div>
                 </div>
                 
+                <div class="type-info">
+                    <strong>Durées de prêt par type d'adhérant :</strong><br>
+                    • Étudiant : 7 jours<br>
+                    • Enseignant : 9 jours<br>
+                    • Professionnel : 12 jours<br>
+                    • Lecture sur place : même jour
+                </div>
+                
+                <div id="loading" class="loading">
+                    Calcul de la date de retour en cours...
+                </div>
+                
                 <div class="date-info" id="dateInfo">
                     <!-- Les informations de date de retour seront affichées ici -->
                 </div>
@@ -347,6 +426,7 @@
                             <tr>
                                 <th>ID Prêt</th>
                                 <th>Adhérant</th>
+                                <th>Type Adhérant</th>
                                 <th>Livre</th>
                                 <th>Exemplaire</th>
                                 <th>Date de prêt</th>
@@ -360,6 +440,7 @@
                                 <tr>
                                     <td>${pret.id}</td>
                                     <td>${pret.adherant.nom} ${pret.adherant.prenom}</td>
+                                    <td>${pret.adherant.typeAdherant.nomType}</td>
                                     <td>${pret.exemplaire.livre.titre}</td>
                                     <td>${pret.exemplaire.id}</td>
                                     <td>${pret.datePret}</td>
