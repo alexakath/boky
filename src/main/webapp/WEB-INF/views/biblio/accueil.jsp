@@ -138,7 +138,7 @@
             
             <div class="menu-item">
                 <h3>Gestion des Réservations</h3>
-                <p>Traiter les réservations</p>
+                <p><a href="/reservations/gerer">Traiter les réservations</a></p>
             </div>
             
             <div class="menu-item">

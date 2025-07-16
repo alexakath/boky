@@ -1,40 +1,60 @@
 -- Insertion des types d'adhérents (DOIT être fait en premier)
-INSERT INTO Typeadherant (nom_type, quota_emprunts, quota_reservations, quota_prolongements, jours_penalite)
+INSERT INTO Typeadherant (nom_type, quota_emprunts, quota_reservations, quota_prolongements, jours_penalite,jours_pret)
 VALUES
-('Étudiant', 3, 2, 2, 3),
-('Professionnel', 5, 3, 2, 5),
-('Professeur', 5, 5, 3, 7);
+('Étudiant', 2, 1, 3, 10, 7),
+('Enseignant', 3, 2, 5, 9, 9),
+('Professionnel', 4, 3, 7, 8, 12);
 
 -- Insertion des adhérents (maintenant les id_type_adherant existent)
-INSERT INTO Adherant (nom, prenom, date_naissance, email, mot_de_passe, id_type_adherant, quota_restant_emprunt, quota_restant_resa, quota_restant_prolog)
+INSERT INTO Adherant (num_adherant, nom, prenom, date_naissance, email, mot_de_passe, id_type_adherant, quota_restant_emprunt, quota_restant_resa, quota_restant_prolog)
 VALUES
-('Rakoto', 'Jean', '2000-05-12', 'jean.rakoto@example.com', 'password123', 1, 3, 2, 2),
-('Rabe', 'Marie', '1985-09-25', 'marie.rabe@example.com', 'password456', 2, 5, 3, 2),
-('Ando', 'Lova', '2002-11-10', 'lova.ando@example.com', 'password789', 3, 5, 5, 3);
+('ETU001','Amine', 'Bensaïd', '2000-05-12', 'amine@gmail.com', 'password123', 1, 2, 1, 3 ),
+('ETU002','Sarah', 'El Khattabi', '2000-05-12', 'Sarah@gmail.com', 'password456', 1, 2, 1, 3),
+('ETU003','Youssef', 'Moujahid', '2000-05-12', 'Youssef@gmail.com', 'password789', 1, 2, 1, 3),
+('ENS001','Nadia', 'Benali', '2000-05-12', 'Nadia@gmail.com', 'password987', 2, 3, 2, 5),
+('ENS002','Karim', 'Haddadi', '2000-05-12', 'Karim@gmail.com', 'password654', 2, 3, 2, 5),
+('ENS003','Salima', 'Touhami', '2000-05-12', 'Salima@gmail.com', 'password3212', 2, 3, 2, 5),
+('PROF001','Rachid', 'El Mansouri', '2000-05-12', 'Rachid@gmail.com', 'password000', 3, 4, 3, 7),
+('PROF002','Amina', 'Zerouali', '2000-05-12', 'Amina@gmail.com', 'password111', 3, 4, 3, 7);
 
-INSERT INTO Livre (titre, auteur, age_minimum, isbn)
+
+INSERT INTO Livre (titre, auteur,categorie, langue, age_minimum, isbn)
 VALUES 
-    ('Le Petit Prince', 'Antoine de Saint-Exupéry', 0, '9781234567890'),
-    ('1984', 'George Orwell', 16, '9780987654321'),
-    ('Harry Potter', 'J.K. Rowling', 10, '9781122334455');
+    ('Les Misérables', 'Victor Hugo','Littérature classique','Français', 18, '9782070409189'),
+    ('L\'Étranger', 'Albert Camus','Philosophie', 'Français',  18, '9782070360022'),
+    ('Harry Potter à l\'école des sorciers', 'J.K. Rowling','Jeunesse / Fantastique', 'Français', 18, '9782070643026');
 
 -- Données pour Exemplaire
 INSERT INTO Exemplaire (id_livre, statut)
 VALUES 
     (1, 'DISPONIBLE'), -- Exemplaire 1 : Le Petit Prince
     (1, 'DISPONIBLE'), -- Exemplaire 2 : Le Petit Prince
-    (2, 'DISPONIBLE'), -- Exemplaire 3 : 1984
-    (2, 'EMPRUNTE'),   -- Exemplaire 4 : 1984
+    (1, 'DISPONIBLE'), -- Exemplaire 2 : Le Petit Prince
+    (2, 'DISPONIBLE'), -- Exemplaire 2 : Le Petit Prince
+    (2, 'DISPONIBLE'), -- Exemplaire 2 : Le Petit Prince  -- Exemplaire 4 : 1984
     (3, 'DISPONIBLE'); -- Exemplaire 5 : Harry Potter
 
 -- Données pour Abonnement
+-- Abonnement (dates corrigées)
 INSERT INTO Abonnement (id_adherant, date_debut, date_fin)
 VALUES 
-    (1, '2025-01-01', '2026-01-01'), -- Jean Rakoto, abonnement actif
-    (2, '2025-06-01', '2026-06-01'), -- Marie Rabe, abonnement actif
-    (3, '2024-01-01', '2025-01-01'); -- Lova Ando, abonnement expiré
+    (1, '2025-02-01', '2025-07-24'),
+    (2, '2025-02-01', '2025-07-01'),
+    (3, '2025-02-02', '2025-12-01'),
+    (4, '2025-02-02', '2026-07-01'),
+    (5, '2025-02-04', '2026-05-01'),
+    (6, '2025-02-05', '2026-06-01'),
+    (7, '2025-02-06', '2025-12-01'),
+    (8, '2025-02-07', '2025-06-01');
 
--- Données pour Penalite (exemple avec les bonnes durées)
-INSERT INTO Penalite (id_adherant, id_pret, type_penalite, date_debut_penalite, nombre_jours, date_fin_penalite)
+-- JourFerier (dates corrigées)
+INSERT INTO jourferier (date_ferier, description)
 VALUES 
-    (2, NULL, 'RETARD', '2025-07-01', 5, '2025-07-06'); -- Marie Rabe (Professionnel), 5 jours de pénalité
+    ('2025-07-13','Dimanche'),
+    ('2025-07-20','Dimanche'),
+    ('2025-07-27','Dimanche'),
+    ('2025-08-03','Dimanche'),
+    ('2025-08-10','Dimanche'),
+    ('2025-08-17','Dimanche'),
+    ('2025-07-26','Jour férié'),
+    ('2025-07-19','Jour férié');

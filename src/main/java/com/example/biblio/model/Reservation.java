@@ -25,21 +25,22 @@ public class Reservation {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "statut", nullable = false)
-    private StatutReservation statut = StatutReservation.EN_ATTENTE;
+    private StatutReservation statut = StatutReservation.en_attente;
 
     public enum StatutReservation {
-        EN_ATTENTE, HONOREE, ANNULEE
+        en_attente, honoree, annulee, EN_ATTENTE, HONOREE
     }
 
     public Reservation() {}
 
-    public Reservation(Exemplaire exemplaire, Adherant adherant, LocalDate dateReservation, StatutReservation statut) {
+    public Reservation(Exemplaire exemplaire, Adherant adherant, LocalDate dateReservation) {
         this.exemplaire = exemplaire;
         this.adherant = adherant;
         this.dateReservation = dateReservation;
-        this.statut = statut;
+        this.statut = StatutReservation.en_attente;
     }
 
+    // Getters et Setters
     public Integer getId() {
         return id;
     }

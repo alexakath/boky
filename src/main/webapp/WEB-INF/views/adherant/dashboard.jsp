@@ -201,29 +201,7 @@
                 <a href="/adherant/prolongements" class="card-btn secondary">Prolonger un prêt</a>
             </div>
 
-            <div class="card">
-                <h3>Jours Fériés</h3>
-                <p>Soyez au courant de nos jours fériés</p>
-                <a href="/adherant/jourFerier" class="card-btn third">Aller Voir ></a>
-            </div>
             
-            <div class="card">
-                <h3>Mon abonnement</h3>
-                <p>Suivez votre abonnement à la bibliothèque</p>
-                <a href="/adherant/abonnement" class="card-btn success">Voir Abonnement</a>
-            </div>
-            
-            <div class="card">
-                <h3>Mes pénalités</h3>
-                <p>Suivez votre pénalité</p>
-                <a href="/adherant/penalite" class="card-btn success">Voir Pénalité</a>
-            </div>
-
-            <div class="card">
-                <h3>Mon prêts</h3>
-                <p>Suivez votre prêt à la bibliothèque</p>
-                <a href="/adherant/pret" class="card-btn success">Voir Prêt</a>
-            </div>
         </div>
         
         

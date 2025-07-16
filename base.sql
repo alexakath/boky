@@ -7,6 +7,8 @@ CREATE TABLE Livre (
     id_livre INT AUTO_INCREMENT PRIMARY KEY,
     titre VARCHAR(255) NOT NULL,
     auteur VARCHAR(100),
+    categorie VARCHAR(100),
+    langue VARCHAR(100),
     age_minimum INT NOT NULL DEFAULT 0, -- Âge minimum requis pour emprunter (ex. 18 pour certains livres)
     isbn VARCHAR(13) UNIQUE
 );
@@ -14,6 +16,7 @@ CREATE TABLE Livre (
 -- Table des exemplaires
 CREATE TABLE Exemplaire (
     id_exemplaire INT AUTO_INCREMENT PRIMARY KEY,
+    nom_exemplaire VARCHAR(100),
     id_livre INT NOT NULL,
     statut ENUM('DISPONIBLE', 'EMPRUNTE', 'RESERVE') NOT NULL DEFAULT 'DISPONIBLE',
     FOREIGN KEY (id_livre) REFERENCES Livre(id_livre) ON DELETE CASCADE
@@ -26,12 +29,14 @@ CREATE TABLE TypeAdherant (
     quota_emprunts INT NOT NULL,
     quota_reservations INT NOT NULL,
     quota_prolongements INT NOT NULL,
-    jours_penalite INT NOT NULL
+    jours_penalite INT NOT NULL,
+    jours_pret INT NOT NULL
 );
 
 -- Table des adhérants
 CREATE TABLE Adherant (
     id_adherant INT AUTO_INCREMENT PRIMARY KEY,
+    num_adherant VARCHAR(100),
     nom VARCHAR(100) NOT NULL,
     prenom VARCHAR(100) NOT NULL,
     date_naissance DATE NOT NULL,
@@ -112,8 +117,7 @@ CREATE TABLE JourFerier (
     id_jour_ferier INT AUTO_INCREMENT PRIMARY KEY,
     date_ferier DATE NOT NULL UNIQUE,
     date_fin_penalite DATE,
-    description VARCHAR(255),
-    CHECK (date_ferier >= CURDATE())
+    description VARCHAR(255)
 );
 
 -- Table pour les demandes de prolongement
@@ -126,8 +130,4 @@ CREATE TABLE DemandeProlongement (
     motif_refus TEXT,
     FOREIGN KEY (id_pret) REFERENCES Pret(id_pret) ON DELETE CASCADE
 );
--- Données pour TypeAdherant
-INSERT INTO TypeAdherant (nom_type, quota_emprunts, quota_reservations, quota_prolongements)
-VALUES ('étudiant', 3, 2, 2),
-       ('professionnel', 5, 3, 2),
-       ('professeur', 5, 5, 3);
+

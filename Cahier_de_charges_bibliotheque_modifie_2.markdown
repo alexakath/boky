@@ -77,7 +77,7 @@ Une pénalité peut être enregistrée (durée définie par le bibliothécaire).
 
 Nom: Réserver_livre
 Objectifs: Permettre à un adhérant de réserver un exemplaire non disponible.
-Acteur: Adhérant (via login)
+1-Acteur: Adhérant (via login)
 Entrée:
 Référence de l'exemplaire d'un livre 
 Date de réservation
@@ -108,6 +108,28 @@ Une réservation est enregistrée pour l'exemplaire.
 un demande de réservation est envoyé au bibliothecaire
 L'exemplaire reste indisponible jusqu'à ce que la réservation soit honorée ou annulée.
 
+2- Acteur: Bibliothécaire
+Entrée:
+les demandes de réservation vennant de "Réservation" de l'utilisateur adhérant
+
+Scénario nominal:
+Le bibliothécaire se connecte au système.
+Il accède au menu "Gestion des réservations".
+Une liste de tous les demandes de réservation est afficher avec les bouttons "valider" et "rejeter" sur chaque demande
+
+Règles de gestion:
+le bibliothécaire valide ou non les demandes et un message est envoyé "validé" ou "rejeter" à l'adhérant selon le choix du bibliothécaire.
+le demande de l'adhérant change automatiquement après validation du bibliothécaire
+le quota de réservation de l'adhérant est incrémenté de 1 si le demande est validé
+le prolongement ou la réservation qui arrive en premier est en prioritaire
+quand un même exemplaire d'un livre est validé, les autres même exemplaires de ce livre devient rejeter automatiquement
+
+Scénario alternatif:
+Si une règle de gestion n'est pas respectée, afficher une erreur (ex. : "Erreur lors de la réservation d'un livre").
+
+Résultat:
+une liste des demande de réservation est affiché avec les bouttons "valider" et "rejeter"
+un message de validité est envoyé au adhérant après validation 
 
 
 4. Prolonger un prêt (CHECK)
